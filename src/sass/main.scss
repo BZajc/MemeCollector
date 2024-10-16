@@ -1,0 +1,25 @@
+// utilities
+
+// website styles
+@import "./styles/components/auth";
+
+// media queries
+// @import "./styles/mq_main.scss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Afacad Flux", sans-serif;
+//   font-family: "Chakra Petch", sans-serif;
+  overflow-x: hidden;
+}
