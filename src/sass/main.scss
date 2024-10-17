@@ -1,7 +1,13 @@
 // utilities
+@import "./styles/utilities/shortcuts";
+@import "./styles/utilities/animations";
+@import "./styles/utilities/default";
+@import "./styles/utilities/mixins";
 
 // website styles
-@import "./styles/components/auth";
+@import "./styles/components/authPage";
+@import "./styles/components/authRegister";
+@import "./styles/components/authLogin";
 
 // media queries
 // @import "./styles/mq_main.scss";
@@ -20,6 +26,6 @@ html {
 
 body {
   font-family: "Afacad Flux", sans-serif;
-//   font-family: "Chakra Petch", sans-serif;
+// font-family: "Chakra Petch", sans-serif;
   overflow-x: hidden;
 }

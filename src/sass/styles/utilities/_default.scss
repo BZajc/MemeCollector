@@ -1,0 +1,11 @@
+// DEFAULT VALUES SO TYPING THE SAME STYLES FOR EVERY ELEMENT CAN BE SKIPPED
+
+button {
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s, background 0.3s;
+}
+
+p {
+  font-size: 1.5rem;
+}

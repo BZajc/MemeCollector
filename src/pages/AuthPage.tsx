@@ -1,39 +1,42 @@
-import { app } from "../firebaseConfig";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import AuthRegister from "../components/AuthRegister";
 import AuthLogin from "../components/AuthLogin";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectSetShowRegistration } from "../store/slices/authSlice";
-import MemeCollectorLogo from "../images/MemeCollectorLogo.png"
+import { selectShowRegistration, selectRotateFormAnimation, setRotateFormAnimation} from "../store/slices/authSlice";
+import { useDispatch } from "react-redux";
+import MemeCollectorLogo from "../images/MemeCollectorLogo.png";
 
 function AuthPage() {
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider(); // Allow to login via Google
-  const showRegistration = useSelector(selectSetShowRegistration);
+  const showRegistration = useSelector(selectShowRegistration);
+  const rotateFormAnimation = useSelector(selectRotateFormAnimation)
+  const dispatch = useDispatch()
 
-  // Handle Login via Google
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log("Logged In:", result.user);
-      })
-      .catch((err) => {
-        console.error("Login Error", err);
-      });
-  };
+  // Reset changing form animation
+  useEffect(() => {
+    if(rotateFormAnimation) {
+      setTimeout(() => {
+        dispatch(setRotateFormAnimation(false))
+      }, 500);
+    }
+  })
 
   return (
-    <div className="auth-page">
-      <img className="auth-page__logo" src={MemeCollectorLogo} alt="app logo"/>
-      <h2>Welcome in Meme Collector</h2>
-      {!showRegistration ? (
-        <AuthRegister />
-      ) : (
-        <>
-          <AuthLogin />
-          <button onClick={handleGoogleLogin}>Log In using Google</button>
-        </>
-      )}
+    <div className='auth-page'>
+      <div className={`auth-page__container ${rotateFormAnimation ? "auth-page__form-change" : ""}`}>
+        <img
+          className="auth-page__logo"
+          src={MemeCollectorLogo}
+          alt="app logo"
+        />
+        <h2 className="auth-page__welcome">Welcome in Meme Collector</h2>
+        {!showRegistration ? (
+          <AuthRegister />
+        ) : (
+          <>
+            <AuthLogin />
+          </>
+        )}
+      </div>
     </div>
   );
 }

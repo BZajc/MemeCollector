@@ -1,0 +1,59 @@
+.auth-register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+
+  &__form-type {
+    margin-top: 1rem;
+
+    font-size: 2rem;
+  }
+
+  &__input {
+    width: 300px;
+    padding: 0.75rem;
+    margin: 0.25rem;
+    border: none;
+    border-bottom: 2px solid $primary;
+    outline: none;
+
+    &:focus {
+      background-color: $primary;
+      color: $white;
+      @include formFocus;
+    }
+  }
+
+  &__change-form-text {
+    font-size: 1.75rem;
+  }
+
+  &__change-form-button {
+    border: none;
+    background-color: transparent;
+    transition: color 0.3s;
+    font-weight: bold;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  &__confirm-button {
+    padding: 1rem 3rem;
+    margin: 0.5rem;
+    width: 100%;
+    background-color: $primary;
+    color: $white;
+
+    &:hover {
+      background-color: $primaryHover;
+    }
+  }
+
+  &__error {
+    color: $red;
+  }
+}
