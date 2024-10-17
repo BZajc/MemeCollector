@@ -46,7 +46,7 @@ function AuthRegister() {
             message = err.message;
         }
 
-        setErrorMessage(message); // Ustaw wiadomość o błędzie w stanie
+        setErrorMessage(message);
       });
   };
 
