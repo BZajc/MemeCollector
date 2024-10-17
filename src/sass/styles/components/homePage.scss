@@ -1,0 +1,16 @@
+.main {
+  width: 100vw;
+  height: 100vw;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+
+  &__navigation {
+    height: 100%;
+    background-color: blue;
+  }
+
+  &__general-container {
+    height: 100%;
+  }
+}

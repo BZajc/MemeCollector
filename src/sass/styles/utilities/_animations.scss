@@ -29,3 +29,34 @@
     }
   }
 }
+
+@mixin bounce {
+  animation: bounce 5s ease-in-out infinite;
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    5% {
+      transform: translateY(-10px);
+    }
+    10% {
+      transform: translateY(0);
+    }
+  }
+}
+
+@mixin finishLoading {
+  animation: finishLoading 2s ease-in-out forwards;
+  @keyframes finishLoading {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}

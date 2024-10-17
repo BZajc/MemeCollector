@@ -1,0 +1,28 @@
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: $primary;
+  width: 100vw;
+  height: 100vh;
+
+  &__animation {
+    width: 100px;
+  }
+  
+  &__text {
+    color: $white;
+  }
+  
+  &__letter {
+    display: inline-block;
+    @include bounce;
+  }
+
+  &__finish {
+    @include finishLoading;
+  }
+}
+
+

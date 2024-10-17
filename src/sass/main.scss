@@ -3,11 +3,13 @@
 @import "./styles/utilities/animations";
 @import "./styles/utilities/default";
 @import "./styles/utilities/mixins";
+@import "./styles/utilities/loading";
 
 // website styles
 @import "./styles/components/authPage";
 @import "./styles/components/authRegister";
 @import "./styles/components/authLogin";
+@import "./styles/components/homePage";
 
 // media queries
 // @import "./styles/mq_main.scss";

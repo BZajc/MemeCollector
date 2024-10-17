@@ -1,8 +1,9 @@
-import React from 'react';
-
 function HomePage() {
     return (
-        <div>HomePage</div>
+        <div className="main">
+            <div className="main__navigation"></div>
+            <div className="main__general-container"></div>
+        </div>
     );
 };
 
