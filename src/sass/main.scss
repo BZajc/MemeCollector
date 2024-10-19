@@ -9,7 +9,10 @@
 @import "./styles/components/authPage";
 @import "./styles/components/authRegister";
 @import "./styles/components/authLogin";
+@import "./styles/components/authAdditional";
 @import "./styles/components/homePage";
+@import "./styles/components/clickerCounter";
+@import "./styles/components/clickArea";
 
 // media queries
 // @import "./styles/mq_main.scss";
@@ -28,6 +31,5 @@ html {
 
 body {
   font-family: "Afacad Flux", sans-serif;
-// font-family: "Chakra Petch", sans-serif;
   overflow-x: hidden;
 }

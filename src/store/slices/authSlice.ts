@@ -2,14 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   showRegistration: boolean;
-  rotateFormAnimation: boolean;
+  swapFormAnimation: boolean;
 
 }
 
 const initialState: AuthState = {
   showRegistration: false,
-  rotateFormAnimation: false,
-
+  swapFormAnimation: false,
 };
 
 const authSlice = createSlice({
@@ -19,16 +18,16 @@ const authSlice = createSlice({
     setShowRegistration: (state, action: PayloadAction<boolean>) => {
       state.showRegistration = action.payload;
     },
-    setRotateFormAnimation: (state, action: PayloadAction<boolean>) => {
-      state.rotateFormAnimation = action.payload;
+    setSwapFormAnimation: (state, action: PayloadAction<boolean>) => {
+      state.swapFormAnimation = action.payload;
     }
   },
 });
 
-export const { setShowRegistration, setRotateFormAnimation } =
-  authSlice.actions;
 export default authSlice.reducer;
+export const { setShowRegistration, setSwapFormAnimation } =
+  authSlice.actions;
 export const selectShowRegistration = (state: { auth: AuthState }) =>
   state.auth.showRegistration;
-export const selectRotateFormAnimation = (state: { auth: AuthState }) =>
-  state.auth.rotateFormAnimation;
+export const selectSwapFormAnimation = (state: { auth: AuthState }) =>
+  state.auth.swapFormAnimation;

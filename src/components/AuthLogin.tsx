@@ -7,7 +7,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { setShowRegistration, setRotateFormAnimation } from "../store/slices/authSlice";
+import { setShowRegistration, setSwapFormAnimation } from "../store/slices/authSlice";
 import logingoogle from "../images/logingoogle.png"
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +38,7 @@ function AuthLogin() {
   // Change from log in to register form
   const handleChangeForm = () => {
     dispatch(setShowRegistration(false));
-    dispatch(setRotateFormAnimation(true))
+    dispatch(setSwapFormAnimation(true))
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

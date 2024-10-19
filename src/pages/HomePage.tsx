@@ -1,10 +1,16 @@
+import ClickerCounter from "../components/ClickerCounter";
+import Navigation from "../components/Navigation";
+import ClickArea from "../components/ClickArea";
+
 function HomePage() {
-    return (
-        <div className="main">
-            <div className="main__navigation"></div>
-            <div className="main__general-container"></div>
-        </div>
-    );
-};
+
+  return (
+    <div className="main">
+        <Navigation />
+        <ClickArea />
+        <ClickerCounter />
+    </div>
+  );
+}
 
 export default HomePage;

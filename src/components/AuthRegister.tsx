@@ -2,7 +2,7 @@ import { useState } from "react";
 import { app } from "../firebaseConfig";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useDispatch} from "react-redux";
-import { setShowRegistration, setRotateFormAnimation} from "../store/slices/authSlice";
+import { setShowRegistration, setSwapFormAnimation} from "../store/slices/authSlice";
 import { FirebaseError } from "firebase/app";
 
 function AuthRegister() {
@@ -53,7 +53,7 @@ function AuthRegister() {
   // Change from register to log in form
   const handleChangeForm = () => {
     dispatch(setShowRegistration(true));
-    dispatch(setRotateFormAnimation(true))
+    dispatch(setSwapFormAnimation(true))
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

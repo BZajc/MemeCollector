@@ -29,7 +29,7 @@ function App() {
 
       // Move setLoading to setTimeout@@@@@@@@@@@@@@@@@@@@
       // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-      setLoading(false);
+        setLoading(false);
       // setTimeout(() => {
       // }, 2000);
 

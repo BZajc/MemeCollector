@@ -6,6 +6,7 @@ import {
   setPersistence,
   browserLocalPersistence,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,6 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
@@ -34,4 +36,4 @@ setPersistence(auth, browserLocalPersistence)
     console.error("Error occured related to persistence", error);
   });
 
-export { app, analytics, auth };
+export { app, analytics, auth, db };
