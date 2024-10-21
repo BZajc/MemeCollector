@@ -1,0 +1,41 @@
+.news-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  margin-left: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+
+  &__text-area {
+    display: flex;
+    height: 100%;
+    width: 300px;
+    margin-left: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: $black;
+  }
+
+  &__text {
+    font-size: 1.5rem;
+    padding: 0.25rem;
+    color: $white;
+  }
+
+  &__logo {
+    padding: 0.25rem 1rem;
+    font-size: 1.5rem;
+    width: 75px;
+    font-weight: bold;
+    font-style: italic;
+    background-color: red;
+    z-index: 1;
+  }
+
+  &__text-wrapper {
+    transform: translateX(100%);
+  }
+}

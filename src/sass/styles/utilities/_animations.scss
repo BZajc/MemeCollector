@@ -60,3 +60,15 @@
     }
   }
 }
+
+@mixin cardStartAnimation {
+  animation: cardStartAnimation 1s ease-in-out forwards;
+  @keyframes cardStartAnimation {
+    0% {
+      transform: rotateY(360deg)
+    }
+    100% {
+      transform: rotateY(0deg)
+    }
+  }
+}

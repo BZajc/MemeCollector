@@ -1,14 +1,12 @@
-import ClickerCounter from "../components/ClickerCounter";
-import Navigation from "../components/Navigation";
 import ClickArea from "../components/ClickArea";
+import NewsBar from "../components/NewsBar";
 
 function HomePage() {
 
   return (
     <div className="main">
-        <Navigation />
         <ClickArea />
-        <ClickerCounter />
+        <NewsBar />
     </div>
   );
 }

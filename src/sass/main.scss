@@ -1,9 +1,8 @@
 // utilities
-@import "./styles/utilities/shortcuts";
-@import "./styles/utilities/animations";
+@import "./styles/utilities/colors";
 @import "./styles/utilities/default";
+@import "./styles/utilities/animations";
 @import "./styles/utilities/mixins";
-@import "./styles/utilities/loading";
 
 // website styles
 @import "./styles/components/authPage";
@@ -11,8 +10,11 @@
 @import "./styles/components/authLogin";
 @import "./styles/components/authAdditional";
 @import "./styles/components/homePage";
+@import "./styles/components/loading";
 @import "./styles/components/clickerCounter";
 @import "./styles/components/clickArea";
+@import "./styles/components/store";
+@import "./styles/components/newsBar";
 
 // media queries
 // @import "./styles/mq_main.scss";

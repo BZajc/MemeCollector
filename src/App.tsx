@@ -5,46 +5,68 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { auth } from "./firebaseConfig";
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
-import { Provider } from "react-redux";
+import Navigation from "./components/Navigation";
 import Lottie from "lottie-react";
 import LoadingAnimation from "./Lottie/Loading Animation.json";
+import ClickerCounter from "./components/ClickerCounter";
+import Store from "./components/Store";
+import { setMoney } from "./store/slices/clickerSlice";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "./firebaseConfig";
 
-function App() {
+function AppContent() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingFinishAnimation, setLoadingFinishAnimation] =
     useState<boolean>(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Verify User
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       setLoadingFinishAnimation(true);
-      // Timer to let loading animation finish smoothly
-
-
-      // Move setLoading to setTimeout@@@@@@@@@@@@@@@@@@@@
-      // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        setLoading(false);
-      // setTimeout(() => {
-      // }, 2000);
-
-
-
-
+      setLoading(false);
     });
 
     // Clean up the listener on unmount
     return () => unsubscribe();
-  }, [user]);
+  }, []);
 
-  //   Display loading screen instead of blinking form if user is being logged in
+  // If user exists in DB fetch for money
+  useEffect(() => {
+    const fetchUserMoney = async () => {
+      if (user) {
+        try {
+          // Get a user in db
+          const userDoc = doc(db, "users", user.uid);
+          const userSnapshot = await getDoc(userDoc);
+
+          if (userSnapshot.exists()) {
+            const userData = userSnapshot.data();
+            if (userData && userData.money !== undefined) {
+              dispatch(setMoney(userData.money));
+              console.log("Money has been fetched from DB");
+            }
+          }
+        } catch (err) {
+          console.log("Money couldn't be fetched from db");
+        }
+      }
+    };
+
+    fetchUserMoney();
+  }, [user, dispatch]);
+
+  // Loading screen to avoid blinking effect
   if (loading) {
-    const loadingText = "App is being loaded. Please wait.";
+    const loadingText = "If you bought your WIFI after 90s this loading is completely useless but I am gonna leave it anyway because I don't want to waste it";
     return (
       <div
         className={`loading ${loadingFinishAnimation ? "loading__finish" : ""}`}
@@ -54,8 +76,6 @@ function App() {
           animationData={LoadingAnimation}
           loop={true}
         />
-
-        {/* Split paragraph to single letters to animate them */}
         <p className="loading__text">
           {loadingText.split("").map((char, index) => (
             <span
@@ -74,20 +94,31 @@ function App() {
   }
 
   return (
+    <>
+      <Navigation />
+      <Routes>
+        {/* If user isn't logged in redirect to /auth */}
+        <Route
+          path="/"
+          element={user ? <HomePage /> : <Navigate to="/auth" />}
+        />
+        {/* If user is logged redirect to home page */}
+        <Route
+          path="/auth"
+          element={!user ? <AuthPage /> : <Navigate to="/" />}
+        />
+        <Route path="/store" element={<Store />} />
+      </Routes>
+      <ClickerCounter />
+    </>
+  );
+}
+
+function App() {
+  return (
     <Provider store={store}>
       <Router>
-        <Routes>
-          {/* If user isn't logged in redirect to /auth */}
-          <Route
-            path="/"
-            element={user ? <HomePage /> : <Navigate to="/auth" />}
-          />
-          {/* If user is logged redirect to home page */}
-          <Route
-            path="/auth"
-            element={!user ? <AuthPage /> : <Navigate to="/" />}
-          />
-        </Routes>
+        <AppContent />
       </Router>
     </Provider>
   );

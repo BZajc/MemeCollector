@@ -16,7 +16,6 @@ const clickerSlice = createSlice({
     reducers: {
         setMoney: (state, action: PayloadAction<number>) => {
             state.money = action.payload
-            console.log("clicked!", state.money);
         },
         setClickPower: (state, action: PayloadAction<number>) => {
             state.clickPower = action.payload
