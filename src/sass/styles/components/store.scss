@@ -36,9 +36,23 @@
     background-color: $primaryTransparent;
     color: $white;
     border-radius: 8px;
+    @include middleAppear;
+
 
     &:hover {
       background-color: $primary;
+    }
+  }
+
+  // Disabled buttons
+  &__section-gift,
+  &__section-collection {
+    background-color: gray;
+    cursor: default;
+    text-decoration: line-through;
+
+    &:hover {
+      background-color: gray;
     }
   }
 
@@ -57,6 +71,8 @@
 
   &__card {
     margin: 1rem;
+    @include middleAppear;
+
 
     &:nth-child(1) .store__card-icon-box {
       background-color: $cardC;
