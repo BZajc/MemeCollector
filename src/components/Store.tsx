@@ -16,47 +16,39 @@ import apreview from "../images/cards/a/a-this-is-fine.webp";
 import spreview from "../images/cards/s/s-shrek-in-the-swamp.webp";
 import StorePopup from "./StorePopup";
 import { useState } from "react";
+import { cards, cardPacks, Card, CardPack } from "../data/cardsConfig";
 
 function Store() {
   // Cards packs displayed in the shop
-  const cardPacks = [
-    {
-      name: "C TIER",
-      image: cpreview,
-      alt: "C Tier card preview",
-      description: "Bunch of crap memes for everyone",
-      chance: "90% C Tier, 10% B Tier",
-      icon: <TbCircleLetterC />,
-      price: 100,
-    },
-    {
-      name: "B TIER",
-      image: bpreview,
-      alt: "B Tier card preview",
-      description: "Accessible memes at an accessible price",
-      chance: "22% C Tier, 75% B Tier, 3% A Tier",
-      icon: <TbCircleLetterB />,
-      price: 2500,
-    },
-    {
-      name: "A TIER",
-      image: apreview,
-      alt: "A Tier card preview",
-      description: "Cool memes",
-      chance: "78% B Tier, 25% A Tier, 2% s Tier",
-      icon: <TbCircleLetterA />,
-      price: 15000,
-    },
-    {
-      name: "S TIER",
-      image: spreview,
-      alt: "S Tier card preview",
-      description: "Memes you'd show at the Christmas dinner table",
-      chance: "85% A Tier, 15% S Tier",
-      icon: <TbCircleLetterS />,
-      price: 100000,
-    },
-  ];
+  const getImageForPack = (name: string) => {
+    switch (name) {
+      case "C TIER Pack":
+        return cpreview;
+      case "B TIER Pack":
+        return bpreview;
+      case "A TIER Pack":
+        return apreview;
+      case "S TIER Pack":
+        return spreview;
+      default:
+        return ""; // lub domyślny obraz
+    }
+  };
+
+  const getIconForPack = (name: string) => {
+    switch (name) {
+      case "C TIER Pack":
+        return <TbCircleLetterC />;
+      case "B TIER Pack":
+        return <TbCircleLetterB />;
+      case "A TIER Pack":
+        return <TbCircleLetterA />;
+      case "S TIER Pack":
+        return <TbCircleLetterS />;
+      default:
+        return null;
+    }
+  };
 
   // State to manage which card popup is active
   const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
@@ -69,6 +61,43 @@ function Store() {
   // Handler for closing the popup
   const handleClosePopup = () => {
     setActiveCardIndex(null);
+  };
+
+  // Get random rarity
+  function getRandomRarity(chances: {
+    [key in Card["rarity"]]?: number;
+  }): Card["rarity"] {
+    const random = Math.random() * 100;
+    let cumulative = 0;
+
+    for (const [rarity, chance] of Object.entries(chances)) {
+      cumulative += chance!;
+      if (random < cumulative) return rarity as Card["rarity"];
+    }
+    return "C"; // fallback, choć teoretycznie nie powinno być to potrzebne
+  }
+
+  // Get 5 random cards
+  function drawCards(pack: CardPack) {
+    const selectedCards: Card[] = [];
+
+    for (let i = 0; i < 5; i++) {
+      const rarity = getRandomRarity(pack.chances);
+      const availableCards = cards.filter((card) => card.rarity === rarity);
+      const randomCard =
+        availableCards[Math.floor(Math.random() * availableCards.length)];
+      selectedCards.push(randomCard);
+    }
+
+    console.log("Selected cards:", selectedCards);
+  }
+
+  // Handle Card Pack Confirm Selection
+  const handleConfirmSelection = () => {
+    if (activeCardIndex !== null) {
+      drawCards(cardPacks[activeCardIndex]);
+    }
+    setActiveCardIndex(null); // Zamknij popup po wyborze
   };
 
   return (
@@ -96,8 +125,8 @@ function Store() {
                 onClick={() => handleShowPopup(index)}
               >
                 <img
-                  src={pack.image}
-                  alt={pack.alt}
+                  src={getImageForPack(pack.name)} // funkcja do uzyskania odpowiedniego obrazu
+                  alt={`${pack.name} preview`}
                   className="store__card-preview"
                 />
                 <div className="store__card-preview-overlay">
@@ -107,14 +136,16 @@ function Store() {
                 </div>
               </button>
               <div className="store__card-info-container">
-                <div className="store__card-icon-box">{pack.icon}</div>
+                <div className="store__card-icon-box">
+                  {getIconForPack(pack.name)}
+                </div>{" "}
+                {/* Ikona w zależności od `pack.name` */}
                 <div className="store__card-info">
                   <div className="store__card-name">
                     <span style={{ color: "#51C7F6" }}>{pack.name}</span> Card
                     Pack
                   </div>
                   <div className="store__card-description">
-                    {pack.description}
                   </div>
                   <div className="store__card-price">
                     price: {pack.price}{" "}
@@ -130,9 +161,9 @@ function Store() {
         {activeCardIndex !== null && (
           <StorePopup
             name={cardPacks[activeCardIndex].name}
-            description={cardPacks[activeCardIndex].description}
-            chance={cardPacks[activeCardIndex].chance}
+            chances={cardPacks[activeCardIndex].chances}
             onClose={handleClosePopup}
+            onConfirm={handleConfirmSelection}
           />
         )}
 
