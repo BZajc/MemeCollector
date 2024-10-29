@@ -17,8 +17,14 @@ import spreview from "../images/cards/s/s-shrek-in-the-swamp.webp";
 import StorePopup from "./StorePopup";
 import { useState } from "react";
 import { cards, cardPacks, Card, CardPack } from "../data/cardsConfig";
+import StoreDrawCards from "./StoreDrawCards";
 
 function Store() {
+  // State to manage which card popup is active
+  const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
+  const [showDrawCards, setShowDrawCards] = useState<boolean>(false);
+  const [drawnCards, setDrawnCards] = useState<Card[]>([])
+
   // Cards packs displayed in the shop
   const getImageForPack = (name: string) => {
     switch (name) {
@@ -31,7 +37,7 @@ function Store() {
       case "S TIER Pack":
         return spreview;
       default:
-        return ""; // lub domyślny obraz
+        return "";
     }
   };
 
@@ -49,9 +55,6 @@ function Store() {
         return null;
     }
   };
-
-  // State to manage which card popup is active
-  const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
 
   // Handler for showing the popup
   const handleShowPopup = (index: number) => {
@@ -74,22 +77,7 @@ function Store() {
       cumulative += chance!;
       if (random < cumulative) return rarity as Card["rarity"];
     }
-    return "C"; // fallback, choć teoretycznie nie powinno być to potrzebne
-  }
-
-  // Get 5 random cards
-  function drawCards(pack: CardPack) {
-    const selectedCards: Card[] = [];
-
-    for (let i = 0; i < 5; i++) {
-      const rarity = getRandomRarity(pack.chances);
-      const availableCards = cards.filter((card) => card.rarity === rarity);
-      const randomCard =
-        availableCards[Math.floor(Math.random() * availableCards.length)];
-      selectedCards.push(randomCard);
-    }
-
-    console.log("Selected cards:", selectedCards);
+    return "C";
   }
 
   // Handle Card Pack Confirm Selection
@@ -97,8 +85,30 @@ function Store() {
     if (activeCardIndex !== null) {
       drawCards(cardPacks[activeCardIndex]);
     }
-    setActiveCardIndex(null); // Zamknij popup po wyborze
+    setActiveCardIndex(null);
+    setShowDrawCards(true);
   };
+
+  // Get 5 random cards
+  function drawCards(pack: CardPack) {
+    const selectedCards: Card[] = [];
+  
+    while (selectedCards.length < 5) {
+      const rarity = getRandomRarity(pack.chances);
+      const availableCards = cards.filter((card) => card.rarity === rarity);
+  
+      // Get random card
+      const randomCard =
+        availableCards[Math.floor(Math.random() * availableCards.length)];
+  
+      // Avoid duplicated cards
+      if (!selectedCards.some((card) => card.id === randomCard.id)) {
+        selectedCards.push(randomCard);
+      }
+    }
+  
+    setDrawnCards(selectedCards);
+  }
 
   return (
     <div className="store">
@@ -125,7 +135,7 @@ function Store() {
                 onClick={() => handleShowPopup(index)}
               >
                 <img
-                  src={getImageForPack(pack.name)} // funkcja do uzyskania odpowiedniego obrazu
+                  src={getImageForPack(pack.name)}
                   alt={`${pack.name} preview`}
                   className="store__card-preview"
                 />
@@ -139,14 +149,12 @@ function Store() {
                 <div className="store__card-icon-box">
                   {getIconForPack(pack.name)}
                 </div>{" "}
-                {/* Ikona w zależności od `pack.name` */}
                 <div className="store__card-info">
                   <div className="store__card-name">
                     <span style={{ color: "#51C7F6" }}>{pack.name}</span> Card
                     Pack
                   </div>
-                  <div className="store__card-description">
-                  </div>
+                  <div className="store__card-description"></div>
                   <div className="store__card-price">
                     price: {pack.price}{" "}
                     <GiTwoCoins className="store__card-price-icon" />
@@ -166,6 +174,9 @@ function Store() {
             onConfirm={handleConfirmSelection}
           />
         )}
+
+        {/* Render new background after confirming card pack selection */}
+        {showDrawCards && <StoreDrawCards drawnCards={drawnCards} />}
 
         <h3 className="store__cards-sub-section-name">Another Sub Section</h3>
       </div>

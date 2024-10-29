@@ -87,3 +87,15 @@
     }
   }
 }
+
+@mixin opacityAppear {
+  animation: opacityAppear 0.5s linear forwards;
+  @keyframes opacityAppear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
