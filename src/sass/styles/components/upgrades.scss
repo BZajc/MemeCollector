@@ -1,0 +1,149 @@
+.upgrades {
+  @include sectionBG;
+
+  &__wrapper {
+    @include sectionWrapper;
+  }
+
+  &__h2 {
+    @include sectionHeading;
+  }
+
+  &__section-container {
+    @include sectionContainer;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  &__filter-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__filter-text {
+    font-size: 2.5rem;
+  }
+
+  &__filter-buttons {
+    padding: 1rem;
+  }
+
+  &__filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+    font-size: 3rem;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 8px;
+    background-color: $primaryTransparent;
+
+    &:hover {
+      background-color: $primaryHover;
+    }
+  }
+
+  &__improvements-section-name {
+    font-size: 3rem;
+    border-bottom: 3px solid $primary;
+  }
+
+  &__improvements-section {
+    margin: 1rem;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  &__improvement-container {
+    display: grid;
+    grid-template-columns: 70px 1fr 70px;
+    width: 80%;
+    border-radius: 8px;
+    border: 3px solid $primary;
+    margin-top: 1rem;
+  }
+
+  &__improvement-icon,
+  &__improvement-buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: $white;
+    background-color: $primary;
+
+    > * {
+      font-size: 4rem;
+    }
+  }
+
+  &__improvement-name-and-price-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem;
+  }
+
+  &__improvement-price {
+    font-weight: bold;
+  }
+
+  &__improvement-buy {
+    position: relative;
+    background-color: $white;
+    color: $primary;
+    border-radius: 0px 8px 8px 0px;
+    border-left: 3px solid $primary;
+    transition: scale 0.3s, border 0.3s, border-radius 0.3s, color 0.3s;
+
+    &:hover {
+      border: 3px solid transparent;
+      border-radius: 8px;
+      scale: 1.2;
+      color: $primaryHover;
+    }
+
+    &:hover > * {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__improvement-name {
+    font-size: 1.75rem;
+  }
+
+  &__improvement-description {
+    padding: 0.25rem;
+    font-size: 1.5rem;
+  }
+
+  &__improvement-unavailable {
+    border: 3px solid $gray;
+
+    .upgrades__improvement-icon {
+      background-color: $gray;
+    }
+
+    .upgrades__improvement-buy {
+      background-color: $gray;
+      border-radius: 0px;
+      color: $white;
+      border-left: 3px solid transparent;
+
+      &:hover {
+        border-radius: 8px;
+      }
+    }
+  }
+
+  &__search-type-button {
+    background-color: transparent;
+    padding: 1rem;margin: 1rem;
+    font-size: 1.75rem;
+  }
+}

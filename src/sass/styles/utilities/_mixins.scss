@@ -1,5 +1,32 @@
-@mixin imagePosition{
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+@mixin imagePosition {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin sectionBG {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(255, 255, 255);
+}
+
+@mixin sectionWrapper {
+    height: 100%;
+    width: 100%;
+}
+
+@mixin sectionHeading {
+  text-align: center;
+  color: $black;
+  letter-spacing: 4px;
+  font-size: 4rem;
+  padding: 2rem;
+  margin-left: 50px;
+}
+
+@mixin sectionContainer {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-left: 250px;
 }

@@ -16,6 +16,7 @@ import Lottie from "lottie-react";
 import LoadingAnimation from "./Lottie/Loading Animation.json";
 import ClickerCounter from "./components/ClickerCounter";
 import Store from "./components/Store";
+import Upgrades from "./components/Upgrades";
 import { setMoney } from "./store/slices/clickerSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
@@ -108,6 +109,7 @@ function AppContent() {
           element={!user ? <AuthPage /> : <Navigate to="/" />}
         />
         <Route path="/store" element={<Store />} />
+        <Route path="/upgrades" element={<Upgrades />} />
       </Routes>
       <ClickerCounter />
     </>

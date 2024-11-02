@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 
 function ClickerCounter() {
   const money = useSelector(selectMoney);
-  const displayMoney = Math.floor(money);
+  const displayMoney = Math.floor(money).toLocaleString('pl-PL');
   const location = useLocation();
 
   // Hide counter at /auth path

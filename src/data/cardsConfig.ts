@@ -92,7 +92,7 @@ const cardPacks: CardPack[] = [
   {
     name: "S TIER Pack",
     price: 100000,
-    chances: { A: 85, S: 15 },
+    chances: { A: 75, S: 25 },
   },
 ];
 

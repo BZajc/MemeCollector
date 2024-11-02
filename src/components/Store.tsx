@@ -15,15 +15,18 @@ import bpreview from "../images/cards/b/b-anthony-adams.webp";
 import apreview from "../images/cards/a/a-this-is-fine.webp";
 import spreview from "../images/cards/s/s-shrek-in-the-swamp.webp";
 import StorePopup from "./StorePopup";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cards, cardPacks, Card, CardPack } from "../data/cardsConfig";
 import StoreDrawCards from "./StoreDrawCards";
+import music from "../sounds/21 Christian Salyer - Habib's Lucky Ganesh All-American Market.mp3";
 
 function Store() {
   // State to manage which card popup is active
   const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
   const [showDrawCards, setShowDrawCards] = useState<boolean>(false);
-  const [drawnCards, setDrawnCards] = useState<Card[]>([])
+  const [drawnCards, setDrawnCards] = useState<Card[]>([]);
+  const [volume, setVolume] = useState<number>(0);
+  const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
 
   // Cards packs displayed in the shop
   const getImageForPack = (name: string) => {
@@ -92,28 +95,64 @@ function Store() {
   // Get 5 random cards
   function drawCards(pack: CardPack) {
     const selectedCards: Card[] = [];
-  
+
     while (selectedCards.length < 5) {
       const rarity = getRandomRarity(pack.chances);
       const availableCards = cards.filter((card) => card.rarity === rarity);
-  
+
       // Get random card
       const randomCard =
         availableCards[Math.floor(Math.random() * availableCards.length)];
-  
+
       // Avoid duplicated cards
       if (!selectedCards.some((card) => card.id === randomCard.id)) {
         selectedCards.push(randomCard);
       }
     }
-  
+
     setDrawnCards(selectedCards);
   }
+
+  const handleCloseDrawCards = () => {
+    setShowDrawCards(false);
+  };
+
+  useEffect(() => {
+    backgroundMusicRef.current = new Audio(music);
+    backgroundMusicRef.current.loop = true;
+    backgroundMusicRef.current.volume = volume;
+    backgroundMusicRef.current.play();
+
+    return () => {
+      backgroundMusicRef.current?.pause();
+      backgroundMusicRef.current = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.volume = volume;
+    }
+  }, [volume]);
 
   return (
     <div className="store">
       <div className="store__wrapper">
         <h2 className="store__h2">GAME SHOP</h2>
+        <div className="store__slider-box">
+          <label htmlFor="volume-slider">Banger Volume:</label>
+          <p>temporary solution</p>
+          <input
+            id="volume-slider"
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={volume}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
+          />
+        </div>
         <div className="store__section-container">
           <button className="store__section-standard">
             <GiCardRandom className="store__section-icon" /> Standard
@@ -125,7 +164,7 @@ function Store() {
             <GiCardAceClubs className="store__section-icon" /> Free
           </button>
         </div>
-        <h3 className="store__cards-sub-section-name">Default</h3>
+        <h3 className="store__cards-sub-section-name">Classic Packs</h3>
         <div className="store__cards-container">
           {/* Render Cards */}
           {cardPacks.map((pack, index) => (
@@ -154,9 +193,8 @@ function Store() {
                     <span style={{ color: "#51C7F6" }}>{pack.name}</span> Card
                     Pack
                   </div>
-                  <div className="store__card-description"></div>
                   <div className="store__card-price">
-                    price: {pack.price}{" "}
+                    price: {pack.price.toLocaleString("pl-PL")}{" "}
                     <GiTwoCoins className="store__card-price-icon" />
                   </div>
                 </div>
@@ -176,7 +214,12 @@ function Store() {
         )}
 
         {/* Render new background after confirming card pack selection */}
-        {showDrawCards && <StoreDrawCards drawnCards={drawnCards} />}
+        {showDrawCards && (
+          <StoreDrawCards
+            drawnCards={drawnCards}
+            onClose={handleCloseDrawCards}
+          />
+        )}
 
         <h3 className="store__cards-sub-section-name">Another Sub Section</h3>
       </div>
