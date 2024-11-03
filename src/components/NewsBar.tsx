@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 
 function NewsBar() {
-  // Używamy useMemo, aby zainicjalizować `news` tylko raz
+  // initialize news only once by using useMemo
   const news = useMemo(
     () => [
       "Maybe the code isn't the cleanest, but it's fine.",
