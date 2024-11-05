@@ -143,7 +143,37 @@
 
   &__search-type-button {
     background-color: transparent;
-    padding: 1rem;margin: 1rem;
+    padding: 1rem;
+    margin: 1rem;
     font-size: 1.75rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  &__search-type-button-active {
+    border-bottom: 2px solid $primary;
+  }
+
+  &__filter-buttons-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__filter-button-active {
+    background-color: $primary;
+
+    + .upgrades__filter-button-text {
+      border-bottom: 2px solid $primary;
+    }
+  }
+
+  &__filter-button-text {
+    border-bottom: 2px solid transparent;
   }
 }

@@ -2,7 +2,7 @@ export interface Upgrades {
   id: string;
   name: string;
   price: number;
-  type: "click" | "idle" | "double click" | "critical click chance" | "critical click power" |"special";
+  type: "click power" | "idle" | "double click" | "critical click chance" | "critical click power" | "special";
   value?: number;
   description?: string;
 }
@@ -13,84 +13,84 @@ export const upgrades: Upgrades[] = [
     id: "clickpower1",
     name: "Click Power I",
     price: 30,
-    type: "click",
+    type: "click power",
     value: 1.3,
   },
   {
     id: "clickpower2",
     name: "Click Power II",
     price: 90,
-    type: "click",
+    type: "click power",
     value: 1.6,
   },
   {
     id: "clickpower3",
     name: "Click Power III",
     price: 270,
-    type: "click",
+    type: "click power",
     value: 1.9,
   },
   {
     id: "clickpower4",
     name: "Click Power IV",
     price: 810,
-    type: "click",
+    type: "click power",
     value: 2.2,
   },
   {
     id: "clickpower5",
     name: "Click Power V",
     price: 2430,
-    type: "click",
+    type: "click power",
     value: 2.5,
   },
   {
     id: "clickpower6",
     name: "Click Power VI",
     price: 7290,
-    type: "click",
+    type: "click power",
     value: 2.8,
   },
   {
     id: "clickpower7",
     name: "Click Power VII",
     price: 21870,
-    type: "click",
+    type: "click power",
     value: 3.1,
   },
   {
     id: "clickpower8",
     name: "Click Power VIII",
     price: 65610,
-    type: "click",
+    type: "click power",
     value: 3.4,
   },
   {
     id: "clickpower9",
     name: "Click Power IX",
     price: 196830,
-    type: "click",
+    type: "click power",
     value: 3.7,
   },
   {
     id: "clickpower10",
     name: "Click Power X",
     price: 590490,
-    type: "click",
+    type: "click power",
     value: 4,
   },
   {
     id: "clickpower11",
     name: "Click Power XI",
     price: 1771470,
-    type: "click",
+    type: "click power",
     value: 4.3,
   },
   {
     id: "clickpower12",
     name: "Click Power XII",
     price: 5314410,
-    type: "click",
+    type: "click power",
     value: 4.6,
   },
   //   Idle
@@ -355,4 +355,25 @@ export const upgrades: Upgrades[] = [
     value: 7.5,
 },
   // Special
+  {
+    id: "specialbubbles1",
+    name: "Bubbles",
+    price: 2500,
+    type: "special",
+    value: 1,
+  },
+  {
+    id: "specialwof1",
+    name: "Wheel Of Meme",
+    price: 30000,
+    type: "special",
+    value: 1,
+  },
+  {
+    id: "specialblackjack1",
+    name: "Black Jack",
+    price: 180000,
+    type: "special",
+    value: 1,
+  },
 ];
