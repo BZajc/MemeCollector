@@ -20,6 +20,7 @@ import Upgrades from "./components/Upgrades";
 import { setMoney } from "./store/slices/clickerSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
+import UserDataLoader from "./components/UserDataLoader";
 
 function AppContent() {
   const [user, setUser] = useState<any>(null);
@@ -97,6 +98,8 @@ function AppContent() {
   return (
     <>
       <Navigation />
+      {/* Conditionally load UserDataLoader to fetch user upgrades, money and cards */}
+      {user && <UserDataLoader />} 
       <Routes>
         {/* If user isn't logged in redirect to /auth */}
         <Route

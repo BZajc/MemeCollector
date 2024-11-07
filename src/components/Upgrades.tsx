@@ -21,15 +21,15 @@ import {
   setRemovePurchasedImprovement,
   selectAvailableUpgrades,
 } from "../store/slices/upgradesSlice";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { upgrades, Upgrade } from "../data/upgradesConfig";
 import {
   setCriticalClickChance,
   setCriticalClickMultiplier,
   setClickPower,
   setDoubleClickChance,
-  setIdleIncomeRate,
 } from "../store/slices/clickerSlice";
+import { useEffect } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { getAuth } from "firebase/auth";
@@ -45,32 +45,7 @@ function Upgrades() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  // Fetch purchased upgrades and currency on component mount
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (user) {
-        const userDoc = doc(db, "users", user.uid);
-        const docSnap = await getDoc(userDoc);
-
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-
-          if (data.purchasedUpgrades) {
-            // Dispatch to remove all purchased upgrades from available upgrades
-            dispatch(setRemovePurchasedImprovement(data.purchasedUpgrades));
-          }
-
-          if (data.money) {
-            // Set user currency from Firestore
-            dispatch(setMoney(data.money));
-          }
-        }
-      }
-    };
-    fetchUserData();
-  }, [dispatch, user]);
-
-  // Save purchased improvements in database
+  // Save purchased improvements in the database
   const updateUpgradeInDB = async (upgrade: Upgrade) => {
     if (money >= upgrade.price) {
       // Deduct money
@@ -80,25 +55,27 @@ function Upgrades() {
       // Update bought improvement and remove it from available upgrades
       dispatch(setRemovePurchasedImprovement(upgrade.id));
 
-      // Update db
       if (user) {
-        const userDoc = doc(db, "users", user.uid);
         try {
+          const userDoc = doc(db, "users", user.uid);
+          
+          // Fetch existing purchased upgrades from the database
           const docSnap = await getDoc(userDoc);
-          const data = docSnap.exists() ? docSnap.data() : {};
+          const existingData = docSnap.exists() ? docSnap.data() : {};
+          const purchasedUpgrades = existingData.purchasedUpgrades || [];
+
+          // Update Firestore with new money and purchased upgrades
           await setDoc(
             userDoc,
             {
               money: newMoney,
-              purchasedUpgrades: [
-                ...(data.purchasedUpgrades || []),
-                upgrade.id,
-              ],
+              purchasedUpgrades: [...purchasedUpgrades, upgrade.id],
             },
             { merge: true }
           );
+          console.log("Upgrade saved to database.");
         } catch (err) {
-          console.error("Error when updating upgrades in db", err);
+          console.error("Error when updating upgrades in database", err);
         }
       }
     }
@@ -110,15 +87,11 @@ function Upgrades() {
     title: string,
     Icon: React.ElementType
   ) => {
-    // Check if the specific type is selected to be displayed
     if (!filterBySelectedTypes.includes(type)) return null;
-  
-    // Filter available upgrades by the specific type
     const filteredUpgrades = availableUpgrades
-      .filter((upgrade) => upgrade.type === type) // <-- Filter by specific type here
+      .filter((upgrade) => upgrade.type === type)
       .filter((upgrade) => !filterByAffordable || money >= upgrade.price);
-  
-    // Find the cheapest improvement if filter is active
+
     const displayedUpgrades = filterByCheapest
       ? [
           filteredUpgrades.reduce(
@@ -126,20 +99,21 @@ function Upgrades() {
               upgrade && upgrade.price < minUpgrade.price ? upgrade : minUpgrade,
             filteredUpgrades[0]
           ),
-        ].filter(Boolean) // Making sure that upgrade is not undefined
+        ].filter(Boolean)
       : filteredUpgrades;
-  
+
     return (
       <>
         <h3 className="upgrades__improvements-section-name">{title}</h3>
         <div className="upgrades__improvements-section">
-          {/* Check if there are any available improvements to display */}
           {displayedUpgrades.length > 0 ? (
             displayedUpgrades.map((upgrade) => (
               <div
                 key={upgrade.id}
                 className={`upgrades__improvement-container ${
-                  money < upgrade.price ? "upgrades__improvement-unavailable" : ""
+                  money < upgrade.price
+                    ? "upgrades__improvement-unavailable"
+                    : ""
                 }`}
               >
                 <div className="upgrades__improvement-icon">
@@ -147,7 +121,9 @@ function Upgrades() {
                 </div>
                 <div className="upgrades__improvement-info-box">
                   <div className="upgrades__improvement-name-and-price-box">
-                    <h5 className="upgrades__improvement-name">{upgrade.name}</h5>
+                    <h5 className="upgrades__improvement-name">
+                      {upgrade.name}
+                    </h5>
                     <p className="upgrades__improvement-price">
                       Price: {upgrade.price.toLocaleString("pl-PL")}
                     </p>
@@ -215,7 +191,6 @@ function Upgrades() {
     dispatch(setSelectAllTypes(improvementTypes));
   }, [dispatch, improvementTypes]);
 
-  // If none of the types to filter aren't selected select all of them
   useEffect(() => {
     if (filterBySelectedTypes.length === 0) {
       selectAllImprovementTypes();
@@ -228,13 +203,9 @@ function Upgrades() {
       // Decrease user money
       dispatch(setMoney(money - upgrade.price));
 
-      // Update bought improvement
       switch (upgrade.type) {
         case "click power":
           dispatch(setClickPower(upgrade.value || 0));
-          break;
-        case "idle":
-          dispatch(setIdleIncomeRate(upgrade.value || 0));
           break;
         case "double click":
           dispatch(setDoubleClickChance(upgrade.value || 0));
@@ -249,11 +220,8 @@ function Upgrades() {
           break;
       }
 
-      // Remove bought improvement from the list
       dispatch(setRemovePurchasedImprovement(upgrade.id));
-
-      // Update firestore
-      updateUpgradeInDB(upgrade);
+      updateUpgradeInDB(upgrade); // Update Firestore with purchase
     }
   };
 
@@ -263,9 +231,7 @@ function Upgrades() {
         <h2 className="upgrades__h2">UPGRADES</h2>
         <div className="upgrades__section-container">
           <p className="upgrades__filter-text">Filter by</p>
-          {/* Filter Buttons */}
           <div className="upgrades__filter-buttons">
-            {/* Show only affordable improvements */}
             <div className="upgrades__filter-buttons-box">
               <button
                 className={`upgrades__filter-button ${
@@ -277,7 +243,6 @@ function Upgrades() {
               </button>
               <p className="upgrades__filter-button-text">Affordable</p>
             </div>
-            {/* Show only the cheapest ones */}
             <div className="upgrades__filter-buttons-box">
               <button
                 className={`upgrades__filter-button ${
@@ -315,25 +280,11 @@ function Upgrades() {
               </button>
             ))}
           </div>
-
-          {/* Render upgrades sections */}
           {renderUpgradesSection("click power", "Click Power", GiClick)}
           {renderUpgradesSection("idle", "Idle Power", GiSandsOfTime)}
-          {renderUpgradesSection(
-            "double click",
-            "Double Click",
-            GiDiceSixFacesTwo
-          )}
-          {renderUpgradesSection(
-            "critical click chance",
-            "Critical Click Chance",
-            GiCrossedBones
-          )}
-          {renderUpgradesSection(
-            "critical click power",
-            "Critical Click Power",
-            GiCrossedBones
-          )}
+          {renderUpgradesSection("double click", "Double Click", GiDiceSixFacesTwo)}
+          {renderUpgradesSection("critical click chance", "Critical Click Chance", GiCrossedBones)}
+          {renderUpgradesSection("critical click power", "Critical Click Power", GiCrossedBones)}
           {renderUpgradesSection("special", "Special", GiChessQueen)}
         </div>
       </div>

@@ -3,6 +3,9 @@ import {
   setMoney,
   selectClickPower,
   selectMoney,
+  selectDoubleClickChance,
+  selectCriticalClickChance,
+  selectCriticalClickMultiplier,
 } from "../store/slices/clickerSlice";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -20,22 +23,34 @@ interface Coin {
 function ClickArea() {
   const dispatch = useDispatch();
   const clickPower = useSelector(selectClickPower);
+  const doubleClickChance = useSelector(selectDoubleClickChance);
+  const criticalClickChance = useSelector(selectCriticalClickChance);
+  const criticalClickMultiplier = useSelector(selectCriticalClickMultiplier);
   const money = useSelector(selectMoney);
   const auth = getAuth();
   const user = auth.currentUser;
   const [coins, setCoins] = useState<Coin[]>([]);
 
-  // UPDATE MONEY WITH CLICK AND SAVE IT IN DATABASE
+  // Handle money click event with upgrades
   const handleClickForMoney = async () => {
-    const newMoney = money + clickPower;
+    let earnedMoney = clickPower;
+
+    // Apply double click chance
+    if (Math.random() < doubleClickChance / 100) {
+      earnedMoney *= 2;
+    }
+
+    // Apply critical click chance and multiplier
+    if (Math.random() < criticalClickChance / 100) {
+      earnedMoney *= criticalClickMultiplier;
+    }
+
+    const newMoney = money + earnedMoney;
     dispatch(setMoney(newMoney));
 
     if (user) {
       try {
-        // Get a user in db
         const userDoc = doc(db, "users", user.uid);
-
-        // Save new data in DB
         await setDoc(userDoc, { money: newMoney }, { merge: true });
       } catch (err) {
         console.error("Error while updating money in DB", err);

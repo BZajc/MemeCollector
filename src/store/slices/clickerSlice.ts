@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface ClickerState {
     money: number
     clickPower: number
-    idleIncomeRate: number;
     doubleClickChance: number;
     criticalClickChance: number;
     criticalClickMultiplier: number;
@@ -12,7 +11,6 @@ interface ClickerState {
 const initialState: ClickerState = {
     money: 0,
     clickPower: 1,
-    idleIncomeRate: 0,
     doubleClickChance: 0,
     criticalClickChance: 0,
     criticalClickMultiplier: 1,
@@ -27,9 +25,6 @@ const clickerSlice = createSlice({
         },
         setClickPower: (state, action: PayloadAction<number>) => {
             state.clickPower = action.payload
-        },
-        setIdleIncomeRate: (state, action: PayloadAction<number>) => {
-            state.idleIncomeRate = action.payload
         },
         setDoubleClickChance: (state, action: PayloadAction<number>) => {
             state.doubleClickChance = action.payload;
@@ -47,10 +42,12 @@ export default clickerSlice.reducer
 export const { 
     setMoney,
     setClickPower,
-    setIdleIncomeRate,
     setDoubleClickChance,
     setCriticalClickChance,
     setCriticalClickMultiplier,
 } = clickerSlice.actions
 export const selectMoney = (state: {clicker: ClickerState}) => state.clicker.money
 export const selectClickPower = (state: {clicker: ClickerState}) => state.clicker.clickPower
+export const selectDoubleClickChance = (state: {clicker: ClickerState}) => state.clicker.doubleClickChance
+export const selectCriticalClickChance = (state: {clicker: ClickerState}) => state.clicker.criticalClickChance
+export const selectCriticalClickMultiplier = (state: {clicker: ClickerState}) => state.clicker.criticalClickMultiplier
