@@ -1,4 +1,4 @@
-export interface Upgrades {
+export interface Upgrade {
   id: string;
   name: string;
   price: number;
@@ -7,7 +7,7 @@ export interface Upgrades {
   description?: string;
 }
 
-export const upgrades: Upgrades[] = [
+export const upgrades: Upgrade[] = [
   // Click
   {
     id: "clickpower1",
