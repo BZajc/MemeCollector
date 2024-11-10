@@ -12,8 +12,8 @@ function StorePopup({ name, chances, onClose, onConfirm }: StorePopupProps) {
     .join(", ");
 
   return (
-    <div className="store-popup">
-      <div className="store-popup__container">
+    <div className="store-popup" onClick={onClose}>
+      <div className="store-popup__container" onClick={(e) => e.stopPropagation()}>
         <h3 className="store-popup__h3">
           Are you sure you want to buy {name}?
         </h3>

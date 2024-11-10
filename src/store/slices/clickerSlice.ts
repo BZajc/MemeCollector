@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ClickerState {
-    money: number
-    clickPower: number
+    money: number;
+    clickPower: number;
     doubleClickChance: number;
     criticalClickChance: number;
     criticalClickMultiplier: number;
+    wheelofmeme: boolean;
+    blackjack: boolean;
 }
 
 const initialState: ClickerState = {
@@ -14,6 +16,8 @@ const initialState: ClickerState = {
     doubleClickChance: 0,
     criticalClickChance: 0,
     criticalClickMultiplier: 1,
+    wheelofmeme: false,
+    blackjack: false,
 }
 
 const clickerSlice = createSlice({
@@ -35,6 +39,12 @@ const clickerSlice = createSlice({
         setCriticalClickMultiplier: (state, action: PayloadAction<number>) => {
             state.criticalClickMultiplier = action.payload;
         },
+        setWheelOfMeme: (state, action: PayloadAction<boolean>) => {
+            state.wheelofmeme = action.payload
+        },
+        setBlackJack: (state, action: PayloadAction<boolean>) => {
+            state.blackjack = action.payload
+        }
     }
 })
 
@@ -45,9 +55,13 @@ export const {
     setDoubleClickChance,
     setCriticalClickChance,
     setCriticalClickMultiplier,
+    setWheelOfMeme,
+    setBlackJack
 } = clickerSlice.actions
 export const selectMoney = (state: {clicker: ClickerState}) => state.clicker.money
 export const selectClickPower = (state: {clicker: ClickerState}) => state.clicker.clickPower
 export const selectDoubleClickChance = (state: {clicker: ClickerState}) => state.clicker.doubleClickChance
 export const selectCriticalClickChance = (state: {clicker: ClickerState}) => state.clicker.criticalClickChance
 export const selectCriticalClickMultiplier = (state: {clicker: ClickerState}) => state.clicker.criticalClickMultiplier
+export const selectWheelOfMeme = (state: {clicker: ClickerState}) => state.clicker.wheelofmeme
+export const selectBlackJack = (state: {clicker: ClickerState}) => state.clicker.blackjack

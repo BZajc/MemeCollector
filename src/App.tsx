@@ -21,6 +21,7 @@ import { setMoney } from "./store/slices/clickerSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import UserDataLoader from "./components/UserDataLoader";
+import QuickDisplay from "./components/QuickDisplay";
 
 function AppContent() {
   const [user, setUser] = useState<any>(null);
@@ -115,6 +116,7 @@ function AppContent() {
         <Route path="/upgrades" element={<Upgrades />} />
       </Routes>
       <ClickerCounter />
+      <QuickDisplay />
     </>
   );
 }
