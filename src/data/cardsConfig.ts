@@ -4,6 +4,7 @@ export interface Card {
   name: string;
   image: string;
   rarity: "C" | "B" | "A" | "S";
+  dateAchieved?: string | null;
 }
 
 // Interface for a card pack
@@ -39,6 +40,7 @@ const bImages = importAllImages(require.context('../images/cards/b', false, /\.w
 const cImages = importAllImages(require.context('../images/cards/c', false, /\.webp$/));
 const sImages = importAllImages(require.context('../images/cards/s', false, /\.webp$/));
 
+
 // Combine all images into one object
 const allImages = { ...aImages, ...bImages, ...cImages, ...sImages };
 
@@ -69,6 +71,7 @@ const cards: Card[] = Object.keys(allImages).map((key) => {
     name: formatFileName(key),  // Use formatted name
     image: allImages[key],
     rarity,
+    dateAchieved: null,
   };
 });
 
@@ -81,17 +84,17 @@ const cardPacks: CardPack[] = [
   },
   {
     name: "B TIER Pack",
-    price: 2500,
+    price: 5000,
     chances: { C: 22, B: 75, A: 3 },
   },
   {
     name: "A TIER Pack",
-    price: 15000,
+    price: 65000,
     chances: { B: 78, A: 25, S: 2 },
   },
   {
     name: "S TIER Pack",
-    price: 100000,
+    price: 500000,
     chances: { A: 75, S: 25 },
   },
 ];

@@ -49,4 +49,12 @@
       scale: 1.1;
     }
   }
+
+  &__insufficient-funds {
+    color: $red;
+
+    &:hover {
+      color: $redHover;
+    }
+  }
 }

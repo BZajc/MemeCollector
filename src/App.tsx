@@ -22,6 +22,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import UserDataLoader from "./components/UserDataLoader";
 import QuickDisplay from "./components/QuickDisplay";
+import Collections from "./components/Collections";
 
 function AppContent() {
   const [user, setUser] = useState<any>(null);
@@ -98,7 +99,6 @@ function AppContent() {
 
   return (
     <>
-      <Navigation />
       {/* Conditionally load UserDataLoader to fetch user upgrades, money and cards */}
       {user && <UserDataLoader />} 
       <Routes>
@@ -114,7 +114,9 @@ function AppContent() {
         />
         <Route path="/store" element={<Store />} />
         <Route path="/upgrades" element={<Upgrades />} />
+        <Route path="/collections" element={<Collections />} />
       </Routes>
+      <Navigation />
       <ClickerCounter />
       <QuickDisplay />
     </>

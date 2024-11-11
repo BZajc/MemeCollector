@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 import { setMoney } from "../store/slices/clickerSlice";
 import { setRemovePurchasedImprovement } from "../store/slices/upgradesSlice";
 import { setCriticalClickMultiplier, setCriticalClickChance, setDoubleClickChance, setClickPower, setBlackJack, setWheelOfMeme } from "../store/slices/clickerSlice";
-import { doc, getDoc } from "firebase/firestore";
+import { setAddCard } from "../store/slices/collectionSlice";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { getAuth } from "firebase/auth";
 import { upgrades } from "../data/upgradesConfig";
+import { Card } from "../data/cardsConfig";
 
 function UserDataLoader() {
   const dispatch = useDispatch();
@@ -43,19 +45,19 @@ function UserDataLoader() {
                   case "critical click power":
                     dispatch(setCriticalClickMultiplier(purchasedUpgrade.value || 0));
                     break;
-                    case "special":
-                      // Check the specialSubType to apply the correct logic for each special upgrade
-                      switch (purchasedUpgrade.specialSubType) {
-                        case "blackjack":
-                          dispatch(setBlackJack(true));
-                          break;
-                        case "wheelofmeme":
-                          dispatch(setWheelOfMeme(true));
-                          break;
-                        default:
-                          break;
-                      }
-                      break
+                  case "special":
+                    // Check the specialSubType to apply the correct logic for each special upgrade
+                    switch (purchasedUpgrade.specialSubType) {
+                      case "blackjack":
+                        dispatch(setBlackJack(true));
+                        break;
+                      case "wheelofmeme":
+                        dispatch(setWheelOfMeme(true));
+                        break;
+                      default:
+                        break;
+                    }
+                    break;
                   default:
                     break;
                 }
@@ -68,6 +70,16 @@ function UserDataLoader() {
             dispatch(setMoney(data.money));
           }
         }
+
+        // Fetch and set user's card collection
+        const userCardsRef = collection(db, "users", user.uid, "cards");
+        const cardSnapshots = await getDocs(userCardsRef);
+        const cards: Card[] = cardSnapshots.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Card[];
+
+        dispatch(setAddCard(cards));  // Dispatch fetched cards to Redux
       }
     };
 

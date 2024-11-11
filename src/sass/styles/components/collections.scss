@@ -1,0 +1,36 @@
+.collections {
+  @include sectionBG;
+
+  &__wrapper {
+    @include sectionWrapper;
+  }
+
+  &__h2 {
+    @include sectionHeading;
+  }
+
+  &__section-name {
+    display: inline-block;
+    font-size: 3.5rem;
+    border-bottom: 2px solid $primary;
+  }
+
+  &__section-wrapper {
+    margin-left: 250px;
+  }
+
+  &__section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  &__card {
+    width: 150px;
+    height: 200px;
+  }
+
+  &__card-image {
+    width: 100%;
+  }
+}
