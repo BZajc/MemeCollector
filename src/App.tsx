@@ -4,8 +4,9 @@ import {
   Route,
   Routes,
   Navigate,
+  useLocation
 } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { auth } from "./firebaseConfig";
@@ -23,6 +24,9 @@ import { db } from "./firebaseConfig";
 import UserDataLoader from "./components/UserDataLoader";
 import QuickDisplay from "./components/QuickDisplay";
 import Collections from "./components/Collections";
+import BlackJack from "./components/BlackJack";
+import WheelOfMeme from "./components/WheelOfMeme";
+import { selectBlackJack, selectWheelOfMeme } from "./store/slices/clickerSlice";
 
 function AppContent() {
   const [user, setUser] = useState<any>(null);
@@ -30,6 +34,10 @@ function AppContent() {
   const [loadingFinishAnimation, setLoadingFinishAnimation] =
     useState<boolean>(false);
   const dispatch = useDispatch();
+  const blackJack = useSelector(selectBlackJack)
+  const wheelOfMeme = useSelector(selectWheelOfMeme)
+  const location = useLocation();
+  const isWheelOfMemePath = location.pathname === "/wheelofmeme";
 
   useEffect(() => {
     // Verify User
@@ -99,7 +107,7 @@ function AppContent() {
 
   return (
     <>
-      {/* Conditionally load UserDataLoader to fetch user upgrades, money and cards */}
+      {/* Load UserDataLoader to fetch user upgrades, money and cards */}
       {user && <UserDataLoader />} 
       <Routes>
         {/* If user isn't logged in redirect to /auth */}
@@ -115,10 +123,17 @@ function AppContent() {
         <Route path="/store" element={<Store />} />
         <Route path="/upgrades" element={<Upgrades />} />
         <Route path="/collections" element={<Collections />} />
+        {blackJack && <Route path="/blackjack" element={<BlackJack />} />}
+        {wheelOfMeme && <Route path="/wheelofmeme" element={<WheelOfMeme />} />}
       </Routes>
-      <Navigation />
-      <ClickerCounter />
-      <QuickDisplay />
+      {/* Conditionally render these components only if path is not /wheelofmeme */}
+      {!isWheelOfMemePath && (
+        <>
+          <Navigation />
+          <ClickerCounter />
+          <QuickDisplay />
+        </>
+      )}
     </>
   );
 }

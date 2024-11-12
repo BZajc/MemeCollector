@@ -13,6 +13,8 @@
     display: inline-block;
     font-size: 3.5rem;
     border-bottom: 2px solid $primary;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
   }
 
   &__section-wrapper {
@@ -23,14 +25,40 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
+    padding-bottom: 1rem;
   }
 
   &__card {
+    background-color: $gray;
     width: 150px;
     height: 200px;
+    border-radius: 8px;
+    background-color: $primary;
+    text-align: center;
+    overflow: hidden;
+    color: $white;
   }
 
   &__card-image {
     width: 100%;
+    max-height: 50%;
+  }
+
+  &__card-tier {
+    font-size: 1.75rem;
+    font-weight: bold;
+  }
+
+  &__card-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  &__exit-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 1rem;
+    padding: 1rem 3rem;
   }
 }

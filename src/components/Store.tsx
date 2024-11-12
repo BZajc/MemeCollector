@@ -115,15 +115,24 @@ function Store() {
   
       // Avoid duplicated cards in the drawn set
       if (!selectedCards.some((card) => card.id === randomCard.id)) {
-        // Add dateAchieved here before pushing
-        selectedCards.push({ ...randomCard, dateAchieved: new Date().toISOString() });
+        // Add dateAchieved here before pushing with formatted date
+        selectedCards.push({ 
+          ...randomCard, 
+          dateAchieved: new Date().toLocaleString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })
+        });
       }
     }
   
     setDrawnCards(selectedCards); // Update local state
     updateCardsInDB(selectedCards, pack.price); // Save to database
-  
-    // Dispatch each card to Redux to add with dateAchieved
+
     dispatch(setAddCard(selectedCards)); // Dispatch array of cards with dateAchieved to Redux
   }
 
@@ -164,30 +173,37 @@ function Store() {
 
     try {
       const userDocRef = doc(db, "users", user.uid);
-
+    
       for (const card of cards) {
         const cardDocRef = doc(collection(userDocRef, "cards"), card.id);
-
+    
         // Check if the card already exists in the subcollection
         const cardSnap = await getDoc(cardDocRef);
-
+    
         if (!cardSnap.exists()) {
-          // Add the card if it doesn't already exist
+          // Add the card if it doesn't already exist with formatted date
           await setDoc(cardDocRef, {
             ...card,
-            dateAchieved: new Date().toISOString(),
+            dateAchieved: new Date().toLocaleString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            }),
           });
         }
       }
-
+    
       // Update the money field in the main document
       await setDoc(userDocRef, { money: newMoney }, { merge: true });
-
+    
       console.log("Cards and money successfully saved to database.");
     } catch (error) {
       console.error("Error saving cards and money to database:", error);
-    }
-  };
+    };
+  }
 
   return (
     <div className="store">

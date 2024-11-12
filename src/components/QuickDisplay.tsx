@@ -1,15 +1,34 @@
-import { GiCardExchange, GiCutDiamond } from "react-icons/gi";
+import {
+  // GiCardExchange,
+  GiCutDiamond,
+} from "react-icons/gi";
 import { useSelector } from "react-redux";
 import {
   selectBlackJack,
   selectWheelOfMeme,
 } from "../store/slices/clickerSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function QuickDisplay() {
   const blackJack = useSelector(selectBlackJack);
   const wheelOfMeme = useSelector(selectWheelOfMeme);
   const [showPopup, setShowPopup] = useState<string>("");
+  const navigate = useNavigate();
+
+  const handleConfirm = (type: string) => {
+    console.log(type);
+    switch (type) {
+      case "WHEEL OF MEME":
+        setShowPopup("");
+        navigate("/wheelofmeme");
+        break;
+      case "BLACK JACK":
+        setShowPopup("");
+        navigate("/blackjack");
+        break;
+    }
+  };
 
   const handleSpecialClick = (type: string) => {
     setShowPopup(type);
@@ -49,7 +68,10 @@ function QuickDisplay() {
           {/* Hide open and close buttons if improvement is not purchased */}
           {isPurchased && (
             <>
-              <button className="display-special__popup-button display-special__popup-button--open">
+              <button
+                className="display-special__popup-button display-special__popup-button--open"
+                onClick={() => handleConfirm(title)}
+              >
                 {title}
               </button>
               <button
@@ -73,12 +95,12 @@ function QuickDisplay() {
       >
         <GiCutDiamond className="display-special__icon" />
       </button>
-      <button
+      {/* <button
         className="display-special__button"
         onClick={() => handleSpecialClick("blackjack")}
       >
         <GiCardExchange className="display-special__icon" />
-      </button>
+      </button> */}
 
       {showPopup === "blackjack" &&
         renderPopup(

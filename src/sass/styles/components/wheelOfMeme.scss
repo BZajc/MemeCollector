@@ -1,0 +1,46 @@
+.wheel-of-meme {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../../../images/wheelOfMemeDesktopBG.webp");
+  @include imagePosition;
+  z-index: 2000;
+  width: 100vw;
+  height: 100vh;
+  @include opacityAppear;
+  overflow: hidden;
+
+  &__welcome-popup {
+    background-color: $white;
+    padding: 1rem;
+    margin: 1rem;
+    color: $black;
+    border-radius: 8px;
+    @include middleAppear;
+  }
+
+  &__welcome-text {
+    text-align: center;
+    font-size: 2.5rem;
+  }
+
+  &__welcome-subtext {
+    text-align: center;
+    padding: 1rem;
+    font-size: 2rem;
+  }
+
+  &__how-to-play-h3 {
+    font-size: 2rem;
+  }
+
+  &__rules-list {
+    list-style: none;
+    margin-left: 1.5rem;
+
+    li {
+      font-size: 1.75rem;
+    }
+  }
+}

@@ -304,17 +304,17 @@ export const upgrades: Upgrade[] = [
   {
     id: "specialwof1",
     name: "Wheel Of Meme",
-    price: 30000,
+    price: 200000,
     type: "special",
     specialSubType: "wheelofmeme",
     value: 1,
   },
-  {
-    id: "specialblackjack1",
-    name: "Black Jack",
-    price: 1800000,
-    type: "special",
-    specialSubType: "blackjack",
-    value: 1,
-  },
+  // {
+  //   id: "specialblackjack1",
+  //   name: "Black Jack",
+  //   price: 1800000,
+  //   type: "special",
+  //   specialSubType: "blackjack",
+  //   value: 1,
+  // },
 ];

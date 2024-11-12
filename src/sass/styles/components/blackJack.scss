@@ -1,0 +1,9 @@
+.black-jack {
+  position: relative;
+  background-image: url("../../../images/blackJackDesktopBG.webp");
+  @include imagePosition;
+  z-index: 2000;
+  width: 100vw;
+  height: 100vh;
+  @include opacityAppear;
+}
