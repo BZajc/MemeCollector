@@ -8,7 +8,7 @@ import {
   GiChessQueen,
   GiMoneyStack,
 } from "react-icons/gi";
-import { selectMoney, setMoney, setWheelOfMeme, setBlackJack } from "../store/slices/clickerSlice";
+import { selectMoney, setMoney } from "../store/slices/clickerSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectFilterByAffordable,
@@ -141,8 +141,6 @@ function Upgrades() {
                           return `Improve your critical click chance up to ${upgrade.value}%`;
                         case "critical click power":
                           return `Improve your critical click power by ${upgrade.value}x`;
-                        case "special":
-                          return `Enhance "gameplay" by adding a new way to earn money`;
                         default:
                           return "";
                       }
@@ -216,19 +214,6 @@ function Upgrades() {
         case "critical click power":
           dispatch(setCriticalClickMultiplier(upgrade.value || 0));
           break;
-          case "special":
-            // Obsługa specjalnych ulepszeń bezpośrednio po zakupie
-            switch (upgrade.specialSubType) {
-                case "blackjack":
-                    dispatch(setBlackJack(true));
-                    break;
-                case "wheelofmeme":
-                    dispatch(setWheelOfMeme(true));
-                    break;
-                default:
-                    break;
-            }
-            break;
         default:
           break;
       }

@@ -3,10 +3,9 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
-  useLocation
+  Navigate
 } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { auth } from "./firebaseConfig";
@@ -22,11 +21,7 @@ import { setMoney } from "./store/slices/clickerSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import UserDataLoader from "./components/UserDataLoader";
-import QuickDisplay from "./components/QuickDisplay";
 import Collections from "./components/Collections";
-import BlackJack from "./components/BlackJack";
-import WheelOfMeme from "./components/WheelOfMeme";
-import { selectBlackJack, selectWheelOfMeme } from "./store/slices/clickerSlice";
 
 function AppContent() {
   const [user, setUser] = useState<any>(null);
@@ -34,10 +29,6 @@ function AppContent() {
   const [loadingFinishAnimation, setLoadingFinishAnimation] =
     useState<boolean>(false);
   const dispatch = useDispatch();
-  const blackJack = useSelector(selectBlackJack)
-  const wheelOfMeme = useSelector(selectWheelOfMeme)
-  const location = useLocation();
-  const isWheelOfMemePath = location.pathname === "/wheelofmeme";
 
   useEffect(() => {
     // Verify User
@@ -123,17 +114,10 @@ function AppContent() {
         <Route path="/store" element={<Store />} />
         <Route path="/upgrades" element={<Upgrades />} />
         <Route path="/collections" element={<Collections />} />
-        {blackJack && <Route path="/blackjack" element={<BlackJack />} />}
-        {wheelOfMeme && <Route path="/wheelofmeme" element={<WheelOfMeme />} />}
       </Routes>
       {/* Conditionally render these components only if path is not /wheelofmeme */}
-      {!isWheelOfMemePath && (
-        <>
           <Navigation />
           <ClickerCounter />
-          <QuickDisplay />
-        </>
-      )}
     </>
   );
 }

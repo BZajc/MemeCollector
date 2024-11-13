@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setMoney } from "../store/slices/clickerSlice";
 import { setRemovePurchasedImprovement } from "../store/slices/upgradesSlice";
-import { setCriticalClickMultiplier, setCriticalClickChance, setDoubleClickChance, setClickPower, setBlackJack, setWheelOfMeme } from "../store/slices/clickerSlice";
+import { setCriticalClickMultiplier, setCriticalClickChance, setDoubleClickChance, setClickPower } from "../store/slices/clickerSlice";
 import { setAddCard } from "../store/slices/collectionSlice";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -44,19 +44,6 @@ function UserDataLoader() {
                     break;
                   case "critical click power":
                     dispatch(setCriticalClickMultiplier(purchasedUpgrade.value || 0));
-                    break;
-                  case "special":
-                    // Check the specialSubType to apply the correct logic for each special upgrade
-                    switch (purchasedUpgrade.specialSubType) {
-                      case "blackjack":
-                        dispatch(setBlackJack(true));
-                        break;
-                      case "wheelofmeme":
-                        dispatch(setWheelOfMeme(true));
-                        break;
-                      default:
-                        break;
-                    }
                     break;
                   default:
                     break;
