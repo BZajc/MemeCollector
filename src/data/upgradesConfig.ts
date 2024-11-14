@@ -16,84 +16,84 @@ export const upgrades: Upgrade[] = [
     price: 30,
     type: "click power",
     value: 2.6,
-  },
-  {
+},
+{
     id: "clickpower2",
     name: "Click Power II",
     price: 90,
     type: "click power",
-    value: 4.6,
-  },
-  {
+    value: 7.3,
+},
+{
     id: "clickpower3",
     name: "Click Power III",
     price: 270,
     type: "click power",
-    value: 8.4,
-  },
-  {
+    value: 20.4,
+},
+{
     id: "clickpower4",
     name: "Click Power IV",
     price: 810,
     type: "click power",
-    value: 15.1,
-  },
-  {
+    value: 57.2,
+},
+{
     id: "clickpower5",
     name: "Click Power V",
     price: 2430,
     type: "click power",
-    value: 27.3,
-  },
-  {
+    value: 160.2,
+},
+{
     id: "clickpower6",
     name: "Click Power VI",
     price: 7290,
     type: "click power",
-    value: 49.1,
-  },
-  {
+    value: 448.6,
+},
+{
     id: "clickpower7",
     name: "Click Power VII",
     price: 21870,
     type: "click power",
-    value: 88.4,
-  },
-  {
+    value: 1256.0,
+},
+{
     id: "clickpower8",
     name: "Click Power VIII",
     price: 65610,
     type: "click power",
-    value: 159.1,
-  },
-  {
+    value: 3516.8,
+},
+{
     id: "clickpower9",
     name: "Click Power IX",
     price: 196830,
     type: "click power",
-    value: 286.5,
-  },
-  {
+    value: 9847.0,
+},
+{
     id: "clickpower10",
     name: "Click Power X",
     price: 590490,
     type: "click power",
-    value: 515.7,
-  },
-  {
+    value: 27571.6,
+},
+{
     id: "clickpower11",
     name: "Click Power XI",
     price: 1771470,
     type: "click power",
-    value: 928.3,
-  },
-  {
+    value: 77199.1,
+},
+{
     id: "clickpower12",
     name: "Click Power XII",
     price: 5314410,
     type: "click power",
-    value: 1672,
-  },
+    value: 216157.5,
+},
   // Double Click
   {
     id: "doubleclick1",

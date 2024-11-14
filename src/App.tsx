@@ -1,34 +1,50 @@
+// React
 import { useEffect, useState } from "react";
+
+// React Router
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate
+  Navigate,
+  useLocation,
 } from "react-router-dom";
+
+// Redux
 import { useDispatch } from "react-redux";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { setMoney } from "./store/slices/clickerSlice";
+
+// Firebase
 import { auth } from "./firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "./firebaseConfig";
+
+// Pages
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
+import InfoPage from "./pages/InfoPage";
+
+// Components
 import Navigation from "./components/Navigation";
-import Lottie from "lottie-react";
-import LoadingAnimation from "./Lottie/Loading Animation.json";
 import ClickerCounter from "./components/ClickerCounter";
 import Store from "./components/Store";
 import Upgrades from "./components/Upgrades";
-import { setMoney } from "./store/slices/clickerSlice";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "./firebaseConfig";
 import UserDataLoader from "./components/UserDataLoader";
 import Collections from "./components/Collections";
+
+// Lottie Animations
+import Lottie from "lottie-react";
+import LoadingAnimation from "./Lottie/Loading Animation.json";
+
 
 function AppContent() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [loadingFinishAnimation, setLoadingFinishAnimation] =
-    useState<boolean>(false);
+  const [loadingFinishAnimation, setLoadingFinishAnimation] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const location = useLocation(); // Hook to access the current location
 
   useEffect(() => {
     // Verify User
@@ -47,7 +63,6 @@ function AppContent() {
     const fetchUserMoney = async () => {
       if (user) {
         try {
-          // Get a user in db
           const userDoc = doc(db, "users", user.uid);
           const userSnapshot = await getDoc(userDoc);
 
@@ -55,7 +70,6 @@ function AppContent() {
             const userData = userSnapshot.data();
             if (userData && userData.money !== undefined) {
               dispatch(setMoney(userData.money));
-              console.log("Money has been fetched from DB");
             }
           }
         } catch (err) {
@@ -69,10 +83,11 @@ function AppContent() {
 
   // Loading screen to avoid blinking effect
   if (loading) {
-    const loadingText = "If you bought your WIFI after 90s this loading is completely useless but I am gonna leave it anyway because I don't want to waste it";
+    const loadingText = "This loading is totally useless";
     return (
       <div
         className={`loading ${loadingFinishAnimation ? "loading__finish" : ""}`}
+        style={{ padding: "1rem" }}
       >
         <Lottie
           className="loading__animation"
@@ -83,9 +98,7 @@ function AppContent() {
           {loadingText.split("").map((char, index) => (
             <span
               key={index}
-              className={`loading__letter ${
-                char === " " ? "loading__space" : ""
-              }`}
+              className={`loading__letter ${char === " " ? "loading__space" : ""}`}
               style={{ animationDelay: `${index * 0.05}s` }}
             >
               {char === " " ? "\u00A0" : char}
@@ -98,26 +111,28 @@ function AppContent() {
 
   return (
     <>
-      {/* Load UserDataLoader to fetch user upgrades, money and cards */}
-      {user && <UserDataLoader />} 
+      {/* Load UserDataLoader to fetch user upgrades, money, and cards */}
+      {user && <UserDataLoader />}
       <Routes>
-        {/* If user isn't logged in redirect to /auth */}
-        <Route
-          path="/"
-          element={user ? <HomePage /> : <Navigate to="/auth" />}
-        />
-        {/* If user is logged redirect to home page */}
-        <Route
-          path="/auth"
-          element={!user ? <AuthPage /> : <Navigate to="/" />}
-        />
-        <Route path="/store" element={<Store />} />
-        <Route path="/upgrades" element={<Upgrades />} />
-        <Route path="/collections" element={<Collections />} />
+        {/* Allow access to "/info" even if not logged in */}
+        <Route path="/auth" element={!user ? <AuthPage /> : <Navigate to="/" />} />
+        <Route path="/" element={user ? <HomePage /> : <Navigate to="/auth" />} />
+        <Route path="/store" element={user ? <Store /> : <Navigate to="/auth" />} />
+        <Route path="/upgrades" element={user ? <Upgrades /> : <Navigate to="/auth" />} />
+        <Route path="/collections" element={user ? <Collections /> : <Navigate to="/auth" />} />
+        <Route path="/info" element={<InfoPage />} />
+
+        {/* Redirect all other routes to /auth if not logged in */}
+        <Route path="*" element={<Navigate to={user ? "/" : "/auth"} />} />
       </Routes>
-      {/* Conditionally render these components only if path is not /wheelofmeme */}
+
+      {/* Render Navigation and ClickerCounter only if user is logged in and not on /info */}
+      {user && location.pathname !== "/info" && (
+        <>
           <Navigation />
           <ClickerCounter />
+        </>
+      )}
     </>
   );
 }

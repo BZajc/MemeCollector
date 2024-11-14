@@ -9,6 +9,7 @@ import {
 import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
+// @@ Firebase api keys are only used to identify app that's why they don't have to be stored in .env file @@ //
 const firebaseConfig = {
   apiKey: "AIzaSyDcJz32t1T7F9n6LHaz4SCGv4RfIuTfzi8",
   authDomain: "meme-collector-4795d.firebaseapp.com",

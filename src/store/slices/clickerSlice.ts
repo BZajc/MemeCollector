@@ -9,7 +9,7 @@ interface ClickerState {
 }
 
 const initialState: ClickerState = {
-    money: 0,
+    money: 500,
     clickPower: 1,
     doubleClickChance: 0,
     criticalClickChance: 0,
@@ -34,6 +34,13 @@ const clickerSlice = createSlice({
         },
         setCriticalClickMultiplier: (state, action: PayloadAction<number>) => {
             state.criticalClickMultiplier = action.payload;
+        },
+        resetClickerState: (state) => {
+            state.money = 0
+            state.clickPower = 1
+            state.doubleClickChance = 0
+            state.criticalClickChance = 0
+            state.criticalClickMultiplier = 1
         }
     }
 })
@@ -45,6 +52,7 @@ export const {
     setDoubleClickChance,
     setCriticalClickChance,
     setCriticalClickMultiplier,
+    resetClickerState
 } = clickerSlice.actions
 export const selectMoney = (state: {clicker: ClickerState}) => state.clicker.money
 export const selectClickPower = (state: {clicker: ClickerState}) => state.clicker.clickPower

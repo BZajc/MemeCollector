@@ -1,0 +1,61 @@
+.info-page {
+  @include sectionBG;
+
+  &__wrapper {
+    @include sectionWrapper;
+  }
+
+  &__h2 {
+    @include sectionHeading;
+  }
+
+  &__section-container {
+    padding: 1rem;max-width: 90%;
+    margin: 3rem;
+  }
+
+  &__button {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+
+    &--go-back {
+      margin-top: 2rem;
+      margin-bottom: 5rem;
+      font-size: 2rem;
+      transition: scale 0.3s;
+
+      &:hover {
+        color: $primary;
+        scale: 1.1;
+      }
+    }
+  }
+
+  &__flag-icon {
+    padding: 1rem;
+  }
+
+  &__section-header {
+    margin-top: 2rem;
+    font-size: 2.5rem;
+  }
+
+  &__text {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+
+    // GitHub Link
+    &--7 {
+      font-size: 2rem;
+      color: $primary;
+      transition: color 0.3s;
+      &:visited {
+        color: $primary;
+      }
+      &:hover {
+        color: $primaryHover;
+      }
+    }
+  }
+}

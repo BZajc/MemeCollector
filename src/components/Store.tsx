@@ -18,7 +18,7 @@ import StorePopup from "./StorePopup";
 import { useState, useEffect, useRef } from "react";
 import { cards, cardPacks, Card, CardPack } from "../data/cardsConfig";
 import StoreDrawCards from "./StoreDrawCards";
-import music from "../sounds/21 Christian Salyer - Habib's Lucky Ganesh All-American Market.mp3";
+import music from "../sounds/21-Christian-Salyer-Habib_s-Lucky-Ganesh-All-American-Market_1_.mp3";
 import { getAuth } from "firebase/auth";
 import { setDoc, doc, getDoc, collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -211,13 +211,13 @@ function Store() {
         <h2 className="store__h2">GAME SHOP</h2>
         <div className="store__slider-box">
           <label htmlFor="volume-slider">Banger Volume:</label>
-          <p>temporary solution</p>
           <input
             id="volume-slider"
+            className="store__volume-slider"
             type="range"
             min="0"
             max="1"
-            step="0.1"
+            step="0.01"
             value={volume}
             onChange={(e) => setVolume(parseFloat(e.target.value))}
           />

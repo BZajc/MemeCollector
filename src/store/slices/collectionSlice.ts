@@ -19,13 +19,15 @@ const collectionSlice = createSlice({
         const cardExists = state.cards.some(card => card.id === newCard.id);
         if (!cardExists) {
           state.cards.push(newCard);
-          console.log("CARD HAS BEEN ADDED", action.payload);
         }
       });
     },
+    resetCards: (state) => {
+      state.cards = []
+    }
   },
 });
 
 export default collectionSlice.reducer;
-export const { setAddCard } = collectionSlice.actions;
+export const { setAddCard, resetCards } = collectionSlice.actions;
 export const selectCards = (state: { collection: CollectionState }) => state.collection.cards;

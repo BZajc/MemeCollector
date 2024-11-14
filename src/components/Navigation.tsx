@@ -2,7 +2,6 @@ import {
   BsFillHouseFill,
   BsCartFill,
   BsGrid3X3GapFill,
-  BsBookmarkStarFill,
   BsFillPatchQuestionFill,
   BsDoorClosedFill,
   BsDoorOpenFill,
@@ -21,6 +20,8 @@ import { app } from "../firebaseConfig";
 import { useState } from "react";
 import logo from "../images/MemeCollectorLogo.png";
 import { useLocation } from "react-router-dom";
+import { resetCards } from "../store/slices/collectionSlice";
+import { resetClickerState } from "../store/slices/clickerSlice";
 
 function Navigation() {
   const dispatch = useDispatch();
@@ -55,6 +56,9 @@ function Navigation() {
           .then(() => {
             // user has been logged out successfully
             setShowLogOutOptions(false);
+            // Reset all data so the next user logged won't copy progress from the previous one
+            dispatch(resetCards())
+            dispatch(resetClickerState())
           })
           .catch((err) => {
             console.log("Something went wrong when logging out", err);
@@ -95,13 +99,6 @@ function Navigation() {
       >
         <BsGrid3X3GapFill className="main__nav-btn-icon" />
         <p className="main__nav-btn-text">COLLECTIONS</p>
-      </button>
-      <button
-        className="main__nav-btn"
-        onClick={() => handleNavBtnClick("/achievements")}
-      >
-        <BsBookmarkStarFill className="main__nav-btn-icon" />
-        <p className="main__nav-btn-text">ACHIEVEMENTS</p>
       </button>
       <button
         className="main__nav-btn"
