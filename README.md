@@ -71,7 +71,8 @@ To clone the MemeCollector repository and run it locally, follow these steps:
   npm install
 
 5. Configure Firebase. Open src/firebaseConfig.js file and replace the placeholders with your Firebase project's credentials:
-   
+
+```javascript
 const firebaseConfig = {
   apiKey: "your_api_key",
   authDomain: "your_project_id.firebaseapp.com",
@@ -80,6 +81,7 @@ const firebaseConfig = {
   messagingSenderId: "your_sender_id",
   appId: "your_app_id",
 };
+```
 
 ### Firebase api keys are only used to identify an app and there is no real reason to keep them private that's why you can find mine in the code but they aren't gonna work anyway.
 
