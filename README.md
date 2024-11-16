@@ -8,7 +8,7 @@ My goal was to create an application utilizing Firebase and React, rather than d
 
 ## Project Overview
 
-MemeCollector is a web application designed for showcasing interactive features and connected components. Users earn virtual currency by clicking on the screen, which can then be used to purchase card packs and upgrades. Collected cards are stored in a **Collection**, and users can engage with features like **BlackJack** and **Wheel of Meme** upon unlocking the respective upgrades.
+MemeCollector is a web application designed for showcasing interactive features and connected components. Users earn virtual currency by clicking on the screen, which can then be used to purchase card packs and upgrades. Collected cards are stored in a **Collection**.
 
 ## Features
 
