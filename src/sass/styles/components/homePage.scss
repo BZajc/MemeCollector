@@ -57,6 +57,7 @@
     align-items: center;
     justify-content: start;
     background-color: transparent;
+    min-height: 40px;
     border-radius: 8px;
     padding: 1rem 2rem;
     margin: 1rem;
@@ -130,9 +131,5 @@
       color: $white;
       background-color: $primary;
     }
-  }
-
-  // GENERAL CONTAINER
-  &__general-container {
   }
 }

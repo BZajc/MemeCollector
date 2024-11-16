@@ -22,12 +22,12 @@ const collectionSlice = createSlice({
         }
       });
     },
-    resetCards: (state) => {
+    setResetCards: (state) => {
       state.cards = []
     }
   },
 });
 
 export default collectionSlice.reducer;
-export const { setAddCard, resetCards } = collectionSlice.actions;
+export const { setAddCard, setResetCards } = collectionSlice.actions;
 export const selectCards = (state: { collection: CollectionState }) => state.collection.cards;

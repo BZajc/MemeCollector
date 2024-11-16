@@ -22,6 +22,10 @@
   font-size: 4rem;
   padding: 2rem;
   margin-left: 50px;
+
+  @media (max-width: 576px) {
+    font-size: 2rem;
+  }
 }
 
 @mixin sectionContainer {

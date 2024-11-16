@@ -2,8 +2,7 @@ export interface Upgrade {
   id: string;
   name: string;
   price: number;
-  type: "click power" | "double click" | "critical click chance" | "critical click power" | "special";
-  specialSubType?: "blackjack" | "wheelofmeme";
+  type: "click power" | "double click" | "critical click chance" | "critical click power"
   value?: number;
   description?: string;
 }
@@ -300,21 +299,4 @@ export const upgrades: Upgrade[] = [
     type: "critical click power",
     value: 7.5,
 },
-  // Special
-  {
-    id: "specialwof1",
-    name: "Wheel Of Meme",
-    price: 200000,
-    type: "special",
-    specialSubType: "wheelofmeme",
-    value: 1,
-  },
-  // {
-  //   id: "specialblackjack1",
-  //   name: "Black Jack",
-  //   price: 1800000,
-  //   type: "special",
-  //   specialSubType: "blackjack",
-  //   value: 1,
-  // },
 ];

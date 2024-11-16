@@ -29,20 +29,20 @@ import InfoPage from "./pages/InfoPage";
 // Components
 import Navigation from "./components/Navigation";
 import ClickerCounter from "./components/ClickerCounter";
-import Store from "./components/Store";
-import Upgrades from "./components/Upgrades";
+import Store from "./pages/StorePage";
+import Upgrades from "./pages/UpgradesPage";
 import UserDataLoader from "./components/UserDataLoader";
-import Collections from "./components/Collections";
+import Collections from "./pages/CollectionsPage";
 
 // Lottie Animations
 import Lottie from "lottie-react";
 import LoadingAnimation from "./Lottie/Loading Animation.json";
 
-
 function AppContent() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [loadingFinishAnimation, setLoadingFinishAnimation] = useState<boolean>(false);
+  const [loadingFinishAnimation, setLoadingFinishAnimation] =
+    useState<boolean>(false);
   const dispatch = useDispatch();
   const location = useLocation(); // Hook to access the current location
 
@@ -98,7 +98,9 @@ function AppContent() {
           {loadingText.split("").map((char, index) => (
             <span
               key={index}
-              className={`loading__letter ${char === " " ? "loading__space" : ""}`}
+              className={`loading__letter ${
+                char === " " ? "loading__space" : ""
+              }`}
               style={{ animationDelay: `${index * 0.05}s` }}
             >
               {char === " " ? "\u00A0" : char}
@@ -115,11 +117,26 @@ function AppContent() {
       {user && <UserDataLoader />}
       <Routes>
         {/* Allow access to "/info" even if not logged in */}
-        <Route path="/auth" element={!user ? <AuthPage /> : <Navigate to="/" />} />
-        <Route path="/" element={user ? <HomePage /> : <Navigate to="/auth" />} />
-        <Route path="/store" element={user ? <Store /> : <Navigate to="/auth" />} />
-        <Route path="/upgrades" element={user ? <Upgrades /> : <Navigate to="/auth" />} />
-        <Route path="/collections" element={user ? <Collections /> : <Navigate to="/auth" />} />
+        <Route
+          path="/auth"
+          element={!user ? <AuthPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/"
+          element={user ? <HomePage /> : <Navigate to="/auth" />}
+        />
+        <Route
+          path="/store"
+          element={user ? <Store /> : <Navigate to="/auth" />}
+        />
+        <Route
+          path="/upgrades"
+          element={user ? <Upgrades /> : <Navigate to="/auth" />}
+        />
+        <Route
+          path="/collections"
+          element={user ? <Collections /> : <Navigate to="/auth" />}
+        />
         <Route path="/info" element={<InfoPage />} />
 
         {/* Redirect all other routes to /auth if not logged in */}

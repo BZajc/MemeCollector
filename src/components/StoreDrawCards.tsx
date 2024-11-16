@@ -1,7 +1,6 @@
 import { Card } from "../data/cardsConfig";
 import { useState } from "react";
 import logo from "../images/MemeCollectorLogo.png"
-import { BsArrowBarRight } from "react-icons/bs";
 
 interface StoreDrawCardsProps {
   drawnCards: Card[];
@@ -54,7 +53,7 @@ function StoreDrawCards({ drawnCards, onClose }: StoreDrawCardsProps) {
           </button>
         ))}
       </div>
-      <button className="store-draw__confirm" onClick={onClose}>Collect Cards <BsArrowBarRight /></button>
+      <button className="store-draw__confirm" onClick={onClose}>Collect Cards</button>
     </div>
   );
 }

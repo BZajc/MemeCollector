@@ -35,7 +35,7 @@ const clickerSlice = createSlice({
         setCriticalClickMultiplier: (state, action: PayloadAction<number>) => {
             state.criticalClickMultiplier = action.payload;
         },
-        resetClickerState: (state) => {
+        setResetClickerState: (state) => {
             state.money = 0
             state.clickPower = 1
             state.doubleClickChance = 0
@@ -52,7 +52,7 @@ export const {
     setDoubleClickChance,
     setCriticalClickChance,
     setCriticalClickMultiplier,
-    resetClickerState
+    setResetClickerState
 } = clickerSlice.actions
 export const selectMoney = (state: {clicker: ClickerState}) => state.clicker.money
 export const selectClickPower = (state: {clicker: ClickerState}) => state.clicker.clickPower

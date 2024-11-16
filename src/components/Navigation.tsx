@@ -20,8 +20,9 @@ import { app } from "../firebaseConfig";
 import { useState } from "react";
 import logo from "../images/MemeCollectorLogo.png";
 import { useLocation } from "react-router-dom";
-import { resetCards } from "../store/slices/collectionSlice";
-import { resetClickerState } from "../store/slices/clickerSlice";
+import { setResetCards } from "../store/slices/collectionSlice";
+import { setResetClickerState } from "../store/slices/clickerSlice";
+import { setResetAvailableUpgrades } from "../store/slices/upgradesSlice";
 
 function Navigation() {
   const dispatch = useDispatch();
@@ -57,8 +58,9 @@ function Navigation() {
             // user has been logged out successfully
             setShowLogOutOptions(false);
             // Reset all data so the next user logged won't copy progress from the previous one
-            dispatch(resetCards())
-            dispatch(resetClickerState())
+            dispatch(setResetCards())
+            dispatch(setResetClickerState())
+            dispatch(setResetAvailableUpgrades())
           })
           .catch((err) => {
             console.log("Something went wrong when logging out", err);

@@ -5,7 +5,6 @@ import {
   GiSandsOfTime,
   GiDiceSixFacesTwo,
   GiCrossedBones,
-  GiChessQueen,
   GiMoneyStack,
 } from "react-icons/gi";
 import { selectMoney, setMoney } from "../store/slices/clickerSlice";
@@ -283,7 +282,6 @@ function Upgrades() {
           {renderUpgradesSection("double click", "Double Click", GiDiceSixFacesTwo)}
           {renderUpgradesSection("critical click chance", "Critical Click Chance", GiCrossedBones)}
           {renderUpgradesSection("critical click power", "Critical Click Power", GiCrossedBones)}
-          {renderUpgradesSection("special", "Special", GiChessQueen)}
         </div>
       </div>
     </div>

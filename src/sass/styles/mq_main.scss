@@ -1,0 +1,205 @@
+@media (max-width: 576px) {
+  // Auth
+  .auth-page {
+    flex-direction: column;
+
+    &__container {
+      margin-top: 5rem;
+      width: 280px;
+    }
+  }
+  .auth-login,
+  .auth-register {
+    width: 220px;
+    &__input,
+    &__confirm-button {
+      width: 220px;
+    }
+  }
+  .auth-additional {
+    width: 280px;
+    margin-bottom: 5rem;
+  }
+  //   Store
+  .store {
+    &__h2 {
+      margin-top: 5rem;
+    }
+    &__section-container {
+      margin-left: 100px;
+    }
+    &__cards-sub-section-name {
+      margin-left: 125px;
+    }
+    &__cards-container {
+      display: flex;
+      flex-direction: column;
+      margin-left: 100px;
+      margin-right: 1rem;
+    }
+    &__card-preview-container {
+      width: 200px;
+      height: 150px;
+    }
+    &__card-info-container {
+      width: 200px;
+    }
+  }
+  .store-draw {
+    &__h3 {
+      font-size: 2.5rem;
+    }
+    &__card {
+      height: 200px;
+    }
+    &__cards {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+      justify-content: center;
+      padding: 1rem;
+      width: 100%;
+    }
+    &__image-container {
+      height: 100px;
+      width: 100%;
+    }
+    &__name {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+    }
+
+    &__tier {
+      padding: 0.5rem;
+      font-size: 1.5rem;
+    }
+  }
+  //   Upgrades
+  .upgrades {
+    &__h2 {
+      margin-top: 5rem;
+    }
+    &__section-container {
+      margin-left: 100px;
+    }
+    &__improvement-container {
+      grid-template-columns: 1fr 40px;
+      width: 100%;
+    }
+    &__improvement-icon {
+      display: none;
+    }
+  }
+  //   Collections
+  .collections {
+    &__h2 {
+      margin-top: 5rem;
+    }
+    &__section-wrapper {
+      margin-left: 100px;
+    }
+    &__section {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    &__card {
+      width: 110px;
+    }
+    &__card-date {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  // Auth
+  .auth-page {
+    flex-direction: column;
+
+    &__container {
+      margin-top: 5rem;
+      width: 280px;
+    }
+  }
+  .auth-login,
+  .auth-register {
+    width: 220px;
+    &__input,
+    &__confirm-button {
+      width: 220px;
+    }
+  }
+  .auth-additional {
+    width: 280px;
+    margin-bottom: 5rem;
+  }
+  //   Store
+  .store {
+    
+    &__cards-container {
+      flex-direction: row;
+      margin-left: 100px;
+    }
+  }
+  .store-draw {
+    &__h3 {
+      font-size: 2.5rem;
+    }
+    &__card {
+      height: 200px;
+    }
+    &__cards {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+      justify-content: center;
+      padding: 1rem;
+      width: 100%;
+    }
+    &__image-container {
+      height: 100px;
+      width: 100%;
+    }
+    &__name {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+    }
+
+    &__tier {
+      padding: 0.5rem;
+      font-size: 1.5rem;
+    }
+  }
+  //   Upgrades
+  .upgrades {
+    &__section-container {
+      margin-left: 120px;
+    }
+    &__improvement-container {
+      grid-template-columns: 70px 1fr 70px;
+      width: 100%;
+    }
+    &__improvement-description {
+      font-size: 1.75rem;
+    }
+    &__filter-buttons-box {
+      margin: 1rem;
+    }
+    &__filter-button-text {
+      font-size: 1.75rem;
+    }
+  }
+  //   Collections
+  .collections {
+    &__h2 {
+      margin-top: 5rem;
+    }
+    &__section-wrapper {
+      margin-left: 100px;
+    }
+    &__section {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    &__card {
+      width: 150px;
+    }
+    &__card-date {
+      display: block;
+    }
+  }
+}

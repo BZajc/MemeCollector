@@ -14,10 +14,10 @@ import cpreview from "../images/cards/c/c-hawk-tuah.webp";
 import bpreview from "../images/cards/b/b-anthony-adams.webp";
 import apreview from "../images/cards/a/a-this-is-fine.webp";
 import spreview from "../images/cards/s/s-shrek-in-the-swamp.webp";
-import StorePopup from "./StorePopup";
+import StorePopup from "../components/StorePopup";
 import { useState, useEffect, useRef } from "react";
 import { cards, cardPacks, Card, CardPack } from "../data/cardsConfig";
-import StoreDrawCards from "./StoreDrawCards";
+import StoreDrawCards from "../components/StoreDrawCards";
 import music from "../sounds/21-Christian-Salyer-Habib_s-Lucky-Ganesh-All-American-Market_1_.mp3";
 import { getAuth } from "firebase/auth";
 import { setDoc, doc, getDoc, collection } from "firebase/firestore";
@@ -104,20 +104,20 @@ function Store() {
 
   function drawCards(pack: CardPack) {
     const selectedCards: Card[] = [];
-  
+
     while (selectedCards.length < 5) {
       const rarity = getRandomRarity(pack.chances);
       const availableCards = cards.filter((card) => card.rarity === rarity);
-  
+
       // Get random card
       const randomCard =
         availableCards[Math.floor(Math.random() * availableCards.length)];
-  
+
       // Avoid duplicated cards in the drawn set
       if (!selectedCards.some((card) => card.id === randomCard.id)) {
         // Add dateAchieved here before pushing with formatted date
-        selectedCards.push({ 
-          ...randomCard, 
+        selectedCards.push({
+          ...randomCard,
           dateAchieved: new Date().toLocaleString("en-US", {
             year: "numeric",
             month: "long",
@@ -125,11 +125,11 @@ function Store() {
             hour: "2-digit",
             minute: "2-digit",
             second: "2-digit",
-          })
+          }),
         });
       }
     }
-  
+
     setDrawnCards(selectedCards); // Update local state
     updateCardsInDB(selectedCards, pack.price); // Save to database
 
@@ -173,13 +173,13 @@ function Store() {
 
     try {
       const userDocRef = doc(db, "users", user.uid);
-    
+
       for (const card of cards) {
         const cardDocRef = doc(collection(userDocRef, "cards"), card.id);
-    
+
         // Check if the card already exists in the subcollection
         const cardSnap = await getDoc(cardDocRef);
-    
+
         if (!cardSnap.exists()) {
           // Add the card if it doesn't already exist with formatted date
           await setDoc(cardDocRef, {
@@ -195,15 +195,15 @@ function Store() {
           });
         }
       }
-    
+
       // Update the money field in the main document
       await setDoc(userDocRef, { money: newMoney }, { merge: true });
-    
+
       console.log("Cards and money successfully saved to database.");
     } catch (error) {
       console.error("Error saving cards and money to database:", error);
-    };
-  }
+    }
+  };
 
   return (
     <div className="store">

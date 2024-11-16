@@ -43,6 +43,9 @@ const upgradesSlice = createSlice({
             state.availableUpgrades = state.availableUpgrades.filter(
                 upgrade => !idsToRemove.includes(upgrade.id)
             );
+        },
+        setResetAvailableUpgrades: (state) => {
+            state.availableUpgrades = initialUpgrades;
         }
     }
 });
@@ -54,6 +57,7 @@ export const {
     setToggleSelectedTypes,
     setSelectAllTypes,
     setRemovePurchasedImprovement,
+    setResetAvailableUpgrades
 } = upgradesSlice.actions;
 export const selectFilterByAffordable = (state: { upgrades: UpgradesState }) => state.upgrades.filterByAffordable;
 export const selectFilterByCheapest = (state: { upgrades: UpgradesState }) => state.upgrades.filterByCheapest;
